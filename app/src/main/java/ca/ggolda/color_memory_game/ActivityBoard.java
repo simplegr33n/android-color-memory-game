@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+
 public class ActivityBoard extends AppCompatActivity {
 
     private String PatternString = "123414";
@@ -27,16 +28,16 @@ public class ActivityBoard extends AppCompatActivity {
 
         // Do stuff inside layout when pressed
         // Note the use of OnTouchListener instead of OnClick for the
-        // Responsive behaviour we're going to be
-        // Looking for
+        // Responsive behaviour we're going to be looking for
         LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
         greenButton.setOnTouchListener(new View.OnTouchListener()
         {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
                     // Unnecessary Log
                     Log.d("Pressed", "Button pressed");
 
@@ -46,19 +47,15 @@ public class ActivityBoard extends AppCompatActivity {
                     // Add a value to the end of the Pattern String
                     PatternString = PatternString + "3";
                     patternString.setText(PatternString);
-
-                }
-
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
                     // Another unnecessary Log
                     Log.d("Released", "Button released");
                     //Return background black on-released
                     gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+                } else return false;
 
-                }
-
-                // TODO Auto-generated method stub
-                return false;
+                return true;
             }
         });
 
