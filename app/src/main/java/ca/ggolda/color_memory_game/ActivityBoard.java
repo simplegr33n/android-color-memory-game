@@ -1,6 +1,8 @@
 package ca.ggolda.color_memory_game;
 
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,7 @@ public class ActivityBoard extends AppCompatActivity {
     private int currentIndex = 0;
     private int Min = 1;
     private int Max = 4;
+    private int flashtime = 350;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,10 +132,24 @@ public class ActivityBoard extends AppCompatActivity {
 
                         // light up button corresponding to patternChar
                         if (String.valueOf(patternChar).equals("1")) {
-                            redButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                             greenButton.setBackgroundColor(Color.parseColor("#49f436"));
                             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+
+                            // Animate from white back to color in flashtime milliseconds
+                            int colorFrom = Color.parseColor("#FFFFFF");
+                            int colorTo = Color.parseColor("#FF0000");
+                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                            colorAnimation.setDuration(flashtime); // milliseconds
+                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animator) {
+                                    redButton.setBackgroundColor((int) animator.getAnimatedValue());
+                                }
+                            });
+                            colorAnimation.start();
 
                         } else if (String.valueOf(patternChar).equals("2")) {
 
@@ -141,12 +158,40 @@ public class ActivityBoard extends AppCompatActivity {
                             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
 
+                            // Animate from white back to color in flashtime milliseconds
+                            int colorFrom = Color.parseColor("#FFFFFF");
+                            int colorTo = Color.parseColor("#49f436");
+                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                            colorAnimation.setDuration(flashtime); // milliseconds
+                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animator) {
+                                    greenButton.setBackgroundColor((int) animator.getAnimatedValue());
+                                }
+                            });
+                            colorAnimation.start();
+
                         } else if (String.valueOf(patternChar).equals("3")) {
 
                             redButton.setBackgroundColor(Color.parseColor("#FF0000"));
                             greenButton.setBackgroundColor(Color.parseColor("#49f436"));
                             blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                            // Animate from white back to color in flashtime milliseconds
+                            int colorFrom = Color.parseColor("#FFFFFF");
+                            int colorTo = Color.parseColor("#0000FF");
+                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                            colorAnimation.setDuration(flashtime); // milliseconds
+                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animator) {
+                                    blueButton.setBackgroundColor((int) animator.getAnimatedValue());
+                                }
+                            });
+                            colorAnimation.start();
 
                         } else if (String.valueOf(patternChar).equals("4")) {
 
@@ -155,6 +200,20 @@ public class ActivityBoard extends AppCompatActivity {
                             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
+                            // Animate from white back to color in flashtime milliseconds
+                            int colorFrom = Color.parseColor("#FFFFFF");
+                            int colorTo = Color.parseColor("#FFFB00");
+                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                            colorAnimation.setDuration(flashtime); // milliseconds
+                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator animator) {
+                                    yellowButton.setBackgroundColor((int) animator.getAnimatedValue());
+                                }
+                            });
+                            colorAnimation.start();
+
                         } else if (String.valueOf(patternChar).equals("0")) {
 
                             redButton.setBackgroundColor(Color.parseColor("#FF0000"));
@@ -162,6 +221,7 @@ public class ActivityBoard extends AppCompatActivity {
                             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
 
+                            // TODO: play game at this point, no start button return til after pass/fail
                             startButton.setVisibility(View.VISIBLE);
 
                         }
