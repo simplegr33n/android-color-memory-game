@@ -17,7 +17,7 @@ import java.util.Random;
 public class ActivityBoard extends AppCompatActivity {
 
     private Handler patternHandler;
-    private String PatternString = "123414";
+    private String PatternString = "";
     private String cappedPattern;
     private int currentIndex = 0;
     private int Min = 1;
@@ -53,12 +53,6 @@ public class ActivityBoard extends AppCompatActivity {
                     //Make background white on-pressed
                     gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // Add a Random value to the end of the Pattern String
-                    Random r = new Random();
-                    int i1 = r.nextInt(Max - Min + 1) + Min;
-                    PatternString = PatternString + i1;
-                    patternString.setText(PatternString);
-
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     // Another unnecessary Log
@@ -80,7 +74,18 @@ public class ActivityBoard extends AppCompatActivity {
                 //Hide button once it's been pressed
                 startButton.setVisibility(View.GONE);
 
-                // Create display ready pattern with an 0 to cap the end
+                // Add a Random value to the end of the Pattern String
+                Random r = new Random();
+                int i1 = r.nextInt(Max - Min + 1) + Min;
+                PatternString = PatternString + i1;
+
+                // Display updated PatternString
+                TextView patternString = (TextView) findViewById(R.id.pattern_textview);
+                patternString.setText(PatternString);
+
+                // Reset current index and
+                // Create animation ready pattern with an 0 to cap the end
+                currentIndex = 0;
                 cappedPattern = PatternString + "0";
 
                 //Display pattern to user
@@ -110,6 +115,7 @@ public class ActivityBoard extends AppCompatActivity {
                 final View yellowButton = (View) findViewById(R.id.yellow_button);
                 final View blueButton = (View) findViewById(R.id.blue_button);
                 final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
+                final TextView startButton = (TextView) findViewById(R.id.start_button);
 
                 patternHandler.post(new Runnable() {
 
@@ -155,6 +161,8 @@ public class ActivityBoard extends AppCompatActivity {
                             greenButton.setBackgroundColor(Color.parseColor("#49f436"));
                             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
                             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                            startButton.setVisibility(View.VISIBLE);
 
                         }
 
