@@ -14,11 +14,11 @@ import android.widget.TextView;
 import java.util.Random;
 
 
-
 public class ActivityBoard extends AppCompatActivity {
 
     private Handler patternHandler;
     private String PatternString = "123414";
+    private String cappedPattern;
     private int currentIndex = 0;
     private int Min = 1;
     private int Max = 4;
@@ -80,9 +80,11 @@ public class ActivityBoard extends AppCompatActivity {
                 //Hide button once it's been pressed
                 startButton.setVisibility(View.GONE);
 
+                // Create display ready pattern with an 0 to cap the end
+                cappedPattern = PatternString + "0";
+
                 //Display pattern to user
                 startPattern();
-
             }
         });
     }
@@ -97,25 +99,64 @@ public class ActivityBoard extends AppCompatActivity {
         @Override
         public void run() {
 
-            for (int i = 0; i < PatternString.length(); i++){
+            for (int i = 0; i < cappedPattern.length(); i++) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
+                final View redButton = (View) findViewById(R.id.red_button);
+                final View yellowButton = (View) findViewById(R.id.yellow_button);
+                final View blueButton = (View) findViewById(R.id.blue_button);
+                final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
+
                 patternHandler.post(new Runnable() {
 
                     @Override
                     public void run() {
-                        // get digit at currentIndex and display 
-                        char currentDigit = PatternString.charAt(currentIndex);
+                        // get digit at currentIndex and display
+                        char patternChar = cappedPattern.charAt(currentIndex);
                         currentIndex = currentIndex + 1;
-
                         TextView currentSquare = (TextView) findViewById(R.id.current_textview);
-                        currentSquare.setText(String.valueOf(currentDigit));
+                        currentSquare.setText(String.valueOf(patternChar));
 
+                        // light up button corresponding to patternChar
+                        if (String.valueOf(patternChar).equals("1")) {
+                            redButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
 
+                        } else if (String.valueOf(patternChar).equals("2")) {
+
+                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+                            greenButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                        } else if (String.valueOf(patternChar).equals("3")) {
+
+                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+                            blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                        } else if (String.valueOf(patternChar).equals("4")) {
+
+                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+                            yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                        } else if (String.valueOf(patternChar).equals("0")) {
+
+                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                        }
 
                     }
                 });
