@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Random;
 
 
@@ -33,7 +37,8 @@ public class ActivityBoard extends AppCompatActivity {
     private int Min = 1;
     private int Max = 4;
     private int flashTime = 350;
-    private int sleepTime = 850;
+
+    private int sleepTime;
 
     private TextView patternString;
     private TextView currentSquare;
@@ -66,10 +71,17 @@ public class ActivityBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_layout);
 
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-6262252551936427~5382545595");
+
+        // Request add and load into adView
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         // get current high score from shared preferences
         sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        int defaultValue = 0;
-        highScore = sharedPref.getInt("high_score", defaultValue);
+        highScore = sharedPref.getInt("high_score", 0);
+        sleepTime = sharedPref.getInt("sleep_time", 850);
 
         patternString = (TextView) findViewById(R.id.pattern_textview);
         currentSquare = (TextView) findViewById(R.id.current_textview);

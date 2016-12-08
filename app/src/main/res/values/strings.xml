@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">color-memory-game</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-6262252551936427/6859278795</string>
 </resources>
