@@ -38,50 +38,12 @@ public class ActivityBoard extends AppCompatActivity {
 
         patternHandler = new Handler();
 
-        final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
-
         final TextView patternString = (TextView) findViewById(R.id.pattern_textview);
         patternString.setText(PatternString);
-
-
-        // Do stuff inside layout when pressed
-        // Note the use of OnTouchListener instead of OnClick for the
-        // Responsive behaviour we're going to be looking for
-        LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
-        greenButton.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
-                {
-                    // Unnecessary Log
-                    Log.d("Pressed", "Button pressed");
-
-                    //Make background white on-pressed
-                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
-                {
-                    // Another unnecessary Log
-                    Log.d("Released", "Button released");
-                    //Return background black on-released
-                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
-
-                } else return false;
-
-
-                //Must return true here in order to pick up ACTION_UP
-                return true;
-            }
-        });
 
         final TextView startButton = (TextView) findViewById(R.id.start_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Hide button once it's been pressed
-                startButton.setVisibility(View.GONE);
-
                 //Display pattern to user
                 startPattern();
             }
@@ -92,6 +54,9 @@ public class ActivityBoard extends AppCompatActivity {
     public void startPattern() {
         // Disable color buttons for pattern display duration
         disableButtons();
+
+        TextView startButton = (TextView) findViewById(R.id.start_button);
+        startButton.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String
         Random r = new Random();
@@ -269,7 +234,7 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "1").equals(PatternString)) {
                     patternGuess = patternGuess + "1";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(guessIndex) + "\nNext!");
+                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -306,7 +271,7 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "2").equals(PatternString)) {
                     patternGuess = patternGuess + "2";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(guessIndex) + "\nNext!");
+                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -342,7 +307,7 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "3").equals(PatternString)) {
                     patternGuess = patternGuess + "3";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(guessIndex) + "\nNext!");
+                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -378,13 +343,10 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "4").equals(PatternString)) {
                     patternGuess = patternGuess + "4";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(guessIndex + 1) + "\nNext!");
+                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            //Hide button once it's been pressed
-                            startButton.setVisibility(View.GONE);
-
                             //Display pattern to user
                             startPattern();
                         }
@@ -406,7 +368,6 @@ public class ActivityBoard extends AppCompatActivity {
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             resetGame();
-
                         }
                     });
                 }
@@ -420,11 +381,10 @@ public class ActivityBoard extends AppCompatActivity {
         guessIndex = 0;
 
         final TextView startButton = (TextView) findViewById(R.id.start_button);
-        startButton.setText("Start!");
+        startButton.setText("Go!");
         startButton.setVisibility(View.VISIBLE);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 //Display pattern to user
                 startPattern();
             }
