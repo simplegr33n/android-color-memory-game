@@ -57,6 +57,10 @@ public class ActivityBoard extends AppCompatActivity {
         // Disable color buttons for pattern display duration
         disableButtons();
 
+        //Return background black pattern start
+        final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
+        gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
         TextView startButton = (TextView) findViewById(R.id.start_button);
         startButton.setVisibility(View.GONE);
 
