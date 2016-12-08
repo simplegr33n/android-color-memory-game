@@ -33,16 +33,16 @@ public class ActivityBoard extends AppCompatActivity {
     private int Max = 4;
     private int flashTime = 350;
 
-    final TextView patternString = (TextView) findViewById(R.id.pattern_textview);
-    final TextView currentSquare = (TextView) findViewById(R.id.current_textview);
-    final TextView guessTextview = (TextView) findViewById(R.id.guess_textview);
+    private TextView patternString;
+    private TextView currentSquare;
+    private TextView guessTextview;
 
-    final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
-    final TextView startButton = (TextView) findViewById(R.id.start_button);
-    final View redButton = (View) findViewById(R.id.red_button);
-    final View yellowButton = (View) findViewById(R.id.yellow_button);
-    final View blueButton = (View) findViewById(R.id.blue_button);
-    final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
+    private LinearLayout gameBoard;
+    private TextView startButton;
+    private View redButton;
+    private View yellowButton;
+    private View blueButton;
+    private LinearLayout greenButton;
 
 
 
@@ -51,6 +51,17 @@ public class ActivityBoard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_layout);
+
+        patternString = (TextView) findViewById(R.id.pattern_textview);
+        currentSquare = (TextView) findViewById(R.id.current_textview);
+        guessTextview = (TextView) findViewById(R.id.guess_textview);
+
+        gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
+        startButton = (TextView) findViewById(R.id.start_button);
+        redButton = (View) findViewById(R.id.red_button);
+        yellowButton = (View) findViewById(R.id.yellow_button);
+        blueButton = (View) findViewById(R.id.blue_button);
+        greenButton = (LinearLayout) findViewById(R.id.green_button);
 
         patternHandler = new Handler();
 
