@@ -3,6 +3,7 @@ package ca.ggolda.color_memory_game;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,12 +33,14 @@ public class ActivityBoard extends AppCompatActivity {
     private int Min = 1;
     private int Max = 4;
     private int flashTime = 350;
+    private int sleepTime = 850;
 
     private TextView patternString;
     private TextView currentSquare;
     private TextView guessTextview;
 
     private LinearLayout gameBoard;
+    private LinearLayout startLayout;
     private TextView startButton;
     private View redButton;
     private View yellowButton;
@@ -54,17 +57,26 @@ public class ActivityBoard extends AppCompatActivity {
     private String offColorTwo;
     private String offColorThree;
 
+    SharedPreferences sharedPref;
+    private int highScore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_layout);
 
+        // get current high score from shared preferences
+        sharedPref = this.getPreferences(this.MODE_PRIVATE);
+        int defaultValue = 0;
+        highScore = sharedPref.getInt("high_score", defaultValue);
+
         patternString = (TextView) findViewById(R.id.pattern_textview);
         currentSquare = (TextView) findViewById(R.id.current_textview);
         guessTextview = (TextView) findViewById(R.id.guess_textview);
 
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
+        startLayout = (LinearLayout) findViewById(R.id.StartLayout);
         startButton = (TextView) findViewById(R.id.start_button);
         redButton = (View) findViewById(R.id.red_button);
         yellowButton = (View) findViewById(R.id.yellow_button);
@@ -90,7 +102,7 @@ public class ActivityBoard extends AppCompatActivity {
 
         //Return background black pattern start
         gameBoard.setBackgroundColor(Color.parseColor("#000000"));
-        startButton.setVisibility(View.GONE);
+        startLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String
         Random r = new Random();
@@ -121,7 +133,7 @@ public class ActivityBoard extends AppCompatActivity {
 
             for (int i = 0; i < (cappedPattern.length() + 1); i++) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -266,9 +278,22 @@ public class ActivityBoard extends AppCompatActivity {
             disableButtons();
             patternGuess = patternGuess + press;
             userScore = patternGuess.length();
-            startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
-            startButton.setVisibility(View.VISIBLE);
-            startButton.setOnClickListener(new View.OnClickListener() {
+
+            // if new usesScore beats old high score, change value in shared preferences
+            if (userScore >= highScore ) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("high_score", userScore);
+                editor.apply();
+
+                highScore = sharedPref.getInt("high_score", 0);
+            }
+
+            startButton.setText("Good Job!\nYour Score: " + userScore + "\nHigh Score: " + highScore + "\nNext!");
+
+
+
+            startLayout.setVisibility(View.VISIBLE);
+            startLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Display pattern to user
                     startPattern();
@@ -278,9 +303,6 @@ public class ActivityBoard extends AppCompatActivity {
             // TODO: remove this temp
             guessTextview.setText(patternGuess);
 
-            //TODO: remove
-            Log.e("guessIndex", "" + guessIndex);
-            Log.e("guessIndex", "" + guessIndex);
 
         } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals(String.valueOf(press))) {
             patternGuess = patternGuess + press;
@@ -289,24 +311,18 @@ public class ActivityBoard extends AppCompatActivity {
             // TODO: remove this temp
             guessTextview.setText(patternGuess);
 
-            //TODO: remove
-            Log.e("guessIndex", "" + guessIndex);
-            Log.e("guessIndex", "" + guessIndex);
-
         } else {
             //Disable buttons while start menu up
             disableButtons();
-            startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
-            startButton.setVisibility(View.VISIBLE);
-            startButton.setOnClickListener(new View.OnClickListener() {
+            PatternString = "";
+            startButton.setText("Good Game!\nYour Score: " + userScore + "\nHigh Score: " + highScore + "\nTry Again?");
+            startLayout.setVisibility(View.VISIBLE);
+            startLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     resetGame();
                 }
             });
 
-            //TODO: remove
-            Log.e("guessIndex", "" + guessIndex);
-            Log.e("guessIndex", "" + guessIndex);
         }
 
     }
