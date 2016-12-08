@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +25,8 @@ public class ActivityBoard extends AppCompatActivity {
 
     private String patternGuess = "";
     private int guessIndex = 0;
+
+    private int userScore = 0;
 
     private int Min = 1;
     private int Max = 4;
@@ -234,7 +235,8 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "1").equals(PatternString)) {
                     patternGuess = patternGuess + "1";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
+                    userScore = patternGuess.length();
+                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -254,7 +256,7 @@ public class ActivityBoard extends AppCompatActivity {
                     guessTextview.setText(patternGuess);
 
                 } else {
-                    startButton.setText("Good Game!\nYour Score: " + String.valueOf(guessIndex) + "\nTry Again?");
+                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -271,7 +273,8 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "2").equals(PatternString)) {
                     patternGuess = patternGuess + "2";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
+                    userScore = patternGuess.length();
+                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -290,7 +293,7 @@ public class ActivityBoard extends AppCompatActivity {
                     guessTextview.setText(patternGuess);
 
                 } else {
-                    startButton.setText("Good Game!\nYour Score: " + String.valueOf(guessIndex) + "\nTry Again?");
+                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -307,7 +310,8 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "3").equals(PatternString)) {
                     patternGuess = patternGuess + "3";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
+                    userScore = patternGuess.length();
+                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -326,7 +330,7 @@ public class ActivityBoard extends AppCompatActivity {
                     guessTextview.setText(patternGuess);
 
                 } else {
-                    startButton.setText("Good Game!\nYour Score: " + String.valueOf(guessIndex) + "\nTry Again?");
+                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -343,7 +347,8 @@ public class ActivityBoard extends AppCompatActivity {
 
                 if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "4").equals(PatternString)) {
                     patternGuess = patternGuess + "4";
-                    startButton.setText("Good Job!\nYour Score: " + String.valueOf(patternGuess.length()) + "\nNext!");
+                    userScore = patternGuess.length();
+                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
@@ -363,7 +368,7 @@ public class ActivityBoard extends AppCompatActivity {
                     guessTextview.setText(patternGuess);
 
                 } else {
-                    startButton.setText("Good Game!\nYour Score: " + String.valueOf(guessIndex) + "\nTry Again?");
+                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
                     startButton.setVisibility(View.VISIBLE);
                     startButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
