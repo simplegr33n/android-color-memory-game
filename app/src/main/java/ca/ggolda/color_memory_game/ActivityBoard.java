@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -229,156 +230,232 @@ public class ActivityBoard extends AppCompatActivity {
         final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
         final TextView guessTextview = (TextView) findViewById(R.id.guess_textview);
         final TextView startButton = (TextView) findViewById(R.id.start_button);
+        final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
 
-        redButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        redButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-                if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "1").equals(PatternString)) {
-                    patternGuess = patternGuess + "1";
-                    userScore = patternGuess.length();
-                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Make background white on-pressed
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                            startPattern();
-                        }
-                    });
+                    if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "1").equals(PatternString)) {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        patternGuess = patternGuess + "1";
+                        userScore = patternGuess.length();
+                        startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                //Display pattern to user
+                                startPattern();
+                            }
+                        });
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
-                } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("1")) {
-                    patternGuess = patternGuess + "1";
-                    guessIndex = guessIndex + 1;
+                    } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("1")) {
+                        patternGuess = patternGuess + "1";
+                        guessIndex = guessIndex + 1;
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
-                } else {
-                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            resetGame();
-                        }
-                    });
-                }
+                    } else {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                resetGame();
+                            }
+                        });
+                    }
 
+                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Return background black on-released
+                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
+                } else return false;
+                //Must return true here in order to pick up ACTION_UP
+                return true;
             }
         });
 
-        greenButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        greenButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-                if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "2").equals(PatternString)) {
-                    patternGuess = patternGuess + "2";
-                    userScore = patternGuess.length();
-                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            startPattern();
-                        }
-                    });
+                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Make background white on-pressed
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "2").equals(PatternString)) {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        patternGuess = patternGuess + "2";
+                        userScore = patternGuess.length();
+                        startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                //Display pattern to user
+                                startPattern();
+                            }
+                        });
 
-                } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("2")) {
-                    patternGuess = patternGuess + "2";
-                    guessIndex = guessIndex + 1;
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("2")) {
+                        patternGuess = patternGuess + "2";
+                        guessIndex = guessIndex + 1;
 
-                } else {
-                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            resetGame();
-                        }
-                    });
-                }
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
+                    } else {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                resetGame();
+                            }
+                        });
+                    }
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Return background black on-released
+                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
+                } else return false;
+                //Must return true here in order to pick up ACTION_UP
+                return true;
             }
         });
 
-        blueButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        blueButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-                if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "3").equals(PatternString)) {
-                    patternGuess = patternGuess + "3";
-                    userScore = patternGuess.length();
-                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            startPattern();
-                        }
-                    });
+                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Make background white on-pressed
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "3").equals(PatternString)) {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        patternGuess = patternGuess + "3";
+                        userScore = patternGuess.length();
+                        startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                //Display pattern to user
+                                startPattern();
+                            }
+                        });
 
-                } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("3")) {
-                    patternGuess = patternGuess + "3";
-                    guessIndex = guessIndex + 1;
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("3")) {
+                        patternGuess = patternGuess + "3";
+                        guessIndex = guessIndex + 1;
 
-                } else {
-                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            resetGame();
-                        }
-                    });
-                }
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
+                    } else {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                resetGame();
+                            }
+                        });
+                    }
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Return background black on-released
+                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
+                } else return false;
+                //Must return true here in order to pick up ACTION_UP
+                return true;
             }
         });
 
-        yellowButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        yellowButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-                if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "4").equals(PatternString)) {
-                    patternGuess = patternGuess + "4";
-                    userScore = patternGuess.length();
-                    startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            //Display pattern to user
-                            startPattern();
-                        }
-                    });
+                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Make background white on-pressed
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + "4").equals(PatternString)) {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        patternGuess = patternGuess + "4";
+                        userScore = patternGuess.length();
+                        startButton.setText("Good Job!\nYour Score: " + userScore + "\nNext!");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                //Display pattern to user
+                                startPattern();
+                            }
+                        });
 
-                } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("4")) {
-                    patternGuess = patternGuess + "4";
-                    guessIndex = guessIndex + 1;
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
-                    // TODO: remove this temp
-                    guessTextview.setText(patternGuess);
+                    } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals("4")) {
+                        patternGuess = patternGuess + "4";
+                        guessIndex = guessIndex + 1;
 
-                } else {
-                    startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
-                    startButton.setVisibility(View.VISIBLE);
-                    startButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            resetGame();
-                        }
-                    });
-                }
+                        // TODO: remove this temp
+                        guessTextview.setText(patternGuess);
 
+                    } else {
+                        //Disable buttons while start menu up
+                        disableButtons();
+                        startButton.setText("Good Game!\nYour Score: " + userScore + "\nTry Again?");
+                        startButton.setVisibility(View.VISIBLE);
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                resetGame();
+                            }
+                        });
+                    }
+
+                } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
+                {
+                    //Return background black on-released
+                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
+                } else return false;
+                //Must return true here in order to pick up ACTION_UP
+                return true;
             }
         });
+
     }
 
     private void resetGame() {
@@ -403,10 +480,10 @@ public class ActivityBoard extends AppCompatActivity {
         final View yellowButton = (View) findViewById(R.id.yellow_button);
         final View blueButton = (View) findViewById(R.id.blue_button);
         final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
-        redButton.setOnClickListener(null);
-        yellowButton.setOnClickListener(null);
-        blueButton.setOnClickListener(null);
-        greenButton.setOnClickListener(null);
+        redButton.setOnTouchListener(null);
+        yellowButton.setOnTouchListener(null);
+        blueButton.setOnTouchListener(null);
+        greenButton.setOnTouchListener(null);
     }
 }
 
