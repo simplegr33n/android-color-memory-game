@@ -44,7 +44,15 @@ public class ActivityBoard extends AppCompatActivity {
     private View blueButton;
     private LinearLayout greenButton;
 
+    private View targetQuad;
+    private View offQuadOne;
+    private View offQuadTwo;
+    private View offQuadThree;
 
+    private String targetColor;
+    private String offColorOne;
+    private String offColorTwo;
+    private String offColorThree;
 
 
     @Override
@@ -128,106 +136,21 @@ public class ActivityBoard extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        Log.e("CurrentIndex", String.valueOf(currentIndex));
-
                         // get digit at currentIndex and display
                         char patternChar = cappedPattern.charAt(currentIndex);
                         currentSquare.setText(String.valueOf(patternChar));
 
-
                         // light up button corresponding to patternChar
                         if (String.valueOf(patternChar).equals("1")) {
-                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
-                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
-                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
-
-
-                            // Animate from white back to color in flashTime milliseconds
-                            int colorFrom = Color.parseColor("#FFFFFF");
-                            int colorTo = Color.parseColor("#FF0000");
-                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-                            colorAnimation.setDuration(flashTime); // milliseconds
-                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animator) {
-                                    redButton.setBackgroundColor((int) animator.getAnimatedValue());
-                                }
-                            });
-                            colorAnimation.start();
-
+                            flashButton(1);
                         } else if (String.valueOf(patternChar).equals("2")) {
-
-                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
-                            greenButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
-                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
-
-                            // Animate from white back to color in flashTime milliseconds
-                            int colorFrom = Color.parseColor("#FFFFFF");
-                            int colorTo = Color.parseColor("#49f436");
-                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-                            colorAnimation.setDuration(flashTime); // milliseconds
-                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animator) {
-                                    greenButton.setBackgroundColor((int) animator.getAnimatedValue());
-                                }
-                            });
-                            colorAnimation.start();
-
+                            flashButton(2);
                         } else if (String.valueOf(patternChar).equals("3")) {
-
-                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
-                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
-                            blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
-
-                            // Animate from white back to color in flashTime milliseconds
-                            int colorFrom = Color.parseColor("#FFFFFF");
-                            int colorTo = Color.parseColor("#0000FF");
-                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-                            colorAnimation.setDuration(flashTime); // milliseconds
-                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animator) {
-                                    blueButton.setBackgroundColor((int) animator.getAnimatedValue());
-                                }
-                            });
-                            colorAnimation.start();
-
+                            flashButton(3);
                         } else if (String.valueOf(patternChar).equals("4")) {
-
-                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
-                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
-                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
-                            yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
-                            // Animate from white back to color in flashTime milliseconds
-                            int colorFrom = Color.parseColor("#FFFFFF");
-                            int colorTo = Color.parseColor("#FFFB00");
-                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-                            colorAnimation.setDuration(flashTime); // milliseconds
-                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-                                @Override
-                                public void onAnimationUpdate(ValueAnimator animator) {
-                                    yellowButton.setBackgroundColor((int) animator.getAnimatedValue());
-                                }
-                            });
-                            colorAnimation.start();
-
+                            flashButton(4);
                         } else if (String.valueOf(patternChar).equals("0")) {
-
-                            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
-                            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
-                            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
-                            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
-
-                            // Allow User to Guess
-                            guessPlay();
+                            flashButton(0);
 
                         }
                     }
@@ -481,6 +404,92 @@ public class ActivityBoard extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Set views for animateFlash() function
+    private void flashButton(int quad) {
+
+        if (quad == 1) {
+            targetQuad = (View) findViewById(R.id.red_button);
+            offQuadOne = (View) findViewById(R.id.green_button);
+            offQuadTwo = (View) findViewById(R.id.blue_button);
+            offQuadThree = (View) findViewById(R.id.yellow_button);
+
+            targetColor = "#FF0000";
+            offColorOne = "#49f436";
+            offColorTwo = "#0000FF";
+            offColorThree = "#FFFB00";
+
+            animateFlash();
+
+        } else if (quad == 2) {
+            targetQuad = (View) findViewById(R.id.green_button);
+            offQuadOne = (View) findViewById(R.id.red_button);
+            offQuadTwo = (View) findViewById(R.id.blue_button);
+            offQuadThree = (View) findViewById(R.id.yellow_button);
+
+            targetColor = "#49f436";
+            offColorOne = "#FF0000";
+            offColorTwo = "#0000FF";
+            offColorThree = "#FFFB00";
+
+            animateFlash();
+
+        } else if (quad == 3) {
+            targetQuad = (View) findViewById(R.id.blue_button);
+            offQuadOne = (View) findViewById(R.id.green_button);
+            offQuadTwo = (View) findViewById(R.id.red_button);
+            offQuadThree = (View) findViewById(R.id.yellow_button);
+
+            targetColor = "#0000FF";
+            offColorOne = "#49f436";
+            offColorTwo = "#FF0000";
+            offColorThree = "#FFFB00";
+
+            animateFlash();
+
+        } else if (quad == 3) {
+            targetQuad = (View) findViewById(R.id.yellow_button);
+            offQuadOne = (View) findViewById(R.id.green_button);
+            offQuadTwo = (View) findViewById(R.id.blue_button);
+            offQuadThree = (View) findViewById(R.id.red_button);
+
+            targetColor = "#FFFB00";
+            offColorOne = "#49f436";
+            offColorTwo = "#0000FF";
+            offColorThree = "#FF0000";
+
+            animateFlash();
+
+        } else if (quad == 0) {
+            redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+            greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+            blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+            yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+            // Allow User to Guess
+            guessPlay();
+        }
+    }
+
+    private void animateFlash() {
+        offQuadOne.setBackgroundColor(Color.parseColor(offColorOne));
+        offQuadTwo.setBackgroundColor(Color.parseColor(offColorTwo));
+        offQuadThree.setBackgroundColor(Color.parseColor(offColorThree));
+
+        // Animate from white back to color in flashTime milliseconds
+        int colorFrom = Color.parseColor("#FFFFFF");
+        int colorTo = Color.parseColor(targetColor);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(flashTime); // milliseconds
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                targetQuad.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+        });
+        colorAnimation.start();
     }
 
     private void disableButtons() {
