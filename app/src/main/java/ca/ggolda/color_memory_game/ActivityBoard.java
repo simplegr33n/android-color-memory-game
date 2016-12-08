@@ -20,7 +20,7 @@ public class ActivityBoard extends AppCompatActivity {
 
     private Handler patternHandler;
 
-    private String PatternString = "134";
+    private String PatternString = "";
     private String cappedPattern = "";
     private int currentIndex = -1;
 
