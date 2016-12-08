@@ -33,6 +33,20 @@ public class ActivityBoard extends AppCompatActivity {
     private int Max = 4;
     private int flashTime = 350;
 
+    final TextView patternString = (TextView) findViewById(R.id.pattern_textview);
+    final TextView currentSquare = (TextView) findViewById(R.id.current_textview);
+    final TextView guessTextview = (TextView) findViewById(R.id.guess_textview);
+
+    final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
+    final TextView startButton = (TextView) findViewById(R.id.start_button);
+    final View redButton = (View) findViewById(R.id.red_button);
+    final View yellowButton = (View) findViewById(R.id.yellow_button);
+    final View blueButton = (View) findViewById(R.id.blue_button);
+    final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +54,11 @@ public class ActivityBoard extends AppCompatActivity {
 
         patternHandler = new Handler();
 
-        final TextView patternString = (TextView) findViewById(R.id.pattern_textview);
         patternString.setText(PatternString);
 
-        final TextView startButton = (TextView) findViewById(R.id.start_button);
+        //Display pattern to user
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Display pattern to user
                 startPattern();
             }
         });
@@ -58,10 +70,7 @@ public class ActivityBoard extends AppCompatActivity {
         disableButtons();
 
         //Return background black pattern start
-        final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
         gameBoard.setBackgroundColor(Color.parseColor("#000000"));
-
-        TextView startButton = (TextView) findViewById(R.id.start_button);
         startButton.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String
@@ -70,7 +79,6 @@ public class ActivityBoard extends AppCompatActivity {
         PatternString = PatternString + i1;
 
         // Display updated PatternString
-        TextView patternString = (TextView) findViewById(R.id.pattern_textview);
         patternString.setText(PatternString);
 
         // Reset current index value, guess index, patternGuess and
@@ -81,7 +89,6 @@ public class ActivityBoard extends AppCompatActivity {
         cappedPattern = PatternString + "0";
 
         // TODO: remove this temp
-        TextView guessTextview = (TextView) findViewById(R.id.guess_textview);
         guessTextview.setText(patternGuess);
 
         // Start new thread for animating sequence
@@ -105,11 +112,6 @@ public class ActivityBoard extends AppCompatActivity {
                     currentIndex = currentIndex + 1;
                 }
 
-                final View redButton = (View) findViewById(R.id.red_button);
-                final View yellowButton = (View) findViewById(R.id.yellow_button);
-                final View blueButton = (View) findViewById(R.id.blue_button);
-                final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
-
                 patternHandler.post(new Runnable() {
 
                     @Override
@@ -118,9 +120,7 @@ public class ActivityBoard extends AppCompatActivity {
                         Log.e("CurrentIndex", String.valueOf(currentIndex));
 
                         // get digit at currentIndex and display
-
                         char patternChar = cappedPattern.charAt(currentIndex);
-                        TextView currentSquare = (TextView) findViewById(R.id.current_textview);
                         currentSquare.setText(String.valueOf(patternChar));
 
 
@@ -219,7 +219,6 @@ public class ActivityBoard extends AppCompatActivity {
                             guessPlay();
 
                         }
-
                     }
                 });
             }
@@ -227,14 +226,6 @@ public class ActivityBoard extends AppCompatActivity {
     }
 
     private void guessPlay() {
-
-        final View redButton = (View) findViewById(R.id.red_button);
-        final View yellowButton = (View) findViewById(R.id.yellow_button);
-        final View blueButton = (View) findViewById(R.id.blue_button);
-        final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
-        final TextView guessTextview = (TextView) findViewById(R.id.guess_textview);
-        final TextView startButton = (TextView) findViewById(R.id.start_button);
-        final LinearLayout gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
 
         redButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -287,6 +278,7 @@ public class ActivityBoard extends AppCompatActivity {
                     gameBoard.setBackgroundColor(Color.parseColor("#000000"));
 
                 } else return false;
+
                 //Must return true here in order to pick up ACTION_UP
                 return true;
             }
@@ -343,6 +335,7 @@ public class ActivityBoard extends AppCompatActivity {
                     gameBoard.setBackgroundColor(Color.parseColor("#000000"));
 
                 } else return false;
+
                 //Must return true here in order to pick up ACTION_UP
                 return true;
             }
@@ -399,6 +392,7 @@ public class ActivityBoard extends AppCompatActivity {
                     gameBoard.setBackgroundColor(Color.parseColor("#000000"));
 
                 } else return false;
+
                 //Must return true here in order to pick up ACTION_UP
                 return true;
             }
@@ -455,6 +449,7 @@ public class ActivityBoard extends AppCompatActivity {
                     gameBoard.setBackgroundColor(Color.parseColor("#000000"));
 
                 } else return false;
+
                 //Must return true here in order to pick up ACTION_UP
                 return true;
             }
@@ -466,12 +461,11 @@ public class ActivityBoard extends AppCompatActivity {
         PatternString = "";
         guessIndex = 0;
 
-        final TextView startButton = (TextView) findViewById(R.id.start_button);
         startButton.setText("Go!");
         startButton.setVisibility(View.VISIBLE);
+        //Display pattern to user
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Display pattern to user
                 startPattern();
             }
         });
@@ -480,10 +474,6 @@ public class ActivityBoard extends AppCompatActivity {
 
     private void disableButtons() {
         //Disable color buttons
-        final View redButton = (View) findViewById(R.id.red_button);
-        final View yellowButton = (View) findViewById(R.id.yellow_button);
-        final View blueButton = (View) findViewById(R.id.blue_button);
-        final LinearLayout greenButton = (LinearLayout) findViewById(R.id.green_button);
         redButton.setOnTouchListener(null);
         yellowButton.setOnTouchListener(null);
         blueButton.setOnTouchListener(null);
