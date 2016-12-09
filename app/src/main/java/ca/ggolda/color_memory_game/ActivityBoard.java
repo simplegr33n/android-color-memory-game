@@ -206,14 +206,14 @@ public class ActivityBoard extends AppCompatActivity {
                     //Make background white on-pressed
                     redButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // send guess to guessPress() function
-                    guessPress(1);
-
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
                     redButton.setBackgroundColor(Color.parseColor("#FF0000"));
+
+                    // send guess to guessPress() function
+                    guessPress(1);
 
                 } else return false;
 
@@ -230,14 +230,14 @@ public class ActivityBoard extends AppCompatActivity {
                     //Make background white on-pressed
                     greenButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // send guess to guessPress() function
-                    guessPress(2);
-
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
                     greenButton.setBackgroundColor(Color.parseColor("#49f436"));
+
+                    // send guess to guessPress() function
+                    guessPress(2);
 
                 } else return false;
 
@@ -254,14 +254,16 @@ public class ActivityBoard extends AppCompatActivity {
                     //Make background white on-pressed
                     blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // send guess to guessPress() function
-                    guessPress(3);
 
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
                     blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
+
+                    // send guess to guessPress() function
+                    guessPress(3);
+
 
                 } else return false;
 
@@ -278,13 +280,15 @@ public class ActivityBoard extends AppCompatActivity {
                     //Make background white on-pressed
                     yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                    // send guess to guessPress() function
-                    guessPress(4);
+
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
                     yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+                    // send guess to guessPress() function
+                    guessPress(4);
 
                 } else return false;
 
@@ -300,40 +304,42 @@ public class ActivityBoard extends AppCompatActivity {
     private void guessPress (int press) {
 
         if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + press).equals(PatternString)) {
-            //Disable buttons while start menu up
-            disableButtons();
 
-            patternGuess = patternGuess + press;
-            userScore = patternGuess.length();
+                //Disable buttons while start menu up
+                disableButtons();
 
-            // if new usesScore beats old high score, change value in shared preferences
-            if (userScore >= highScore ) {
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("high_score", userScore);
-                editor.apply();
+                patternGuess = patternGuess + press;
+                userScore = patternGuess.length();
 
-                highScore = sharedPref.getInt("high_score", 0);
-            }
+                // if new usesScore beats old high score, change value in shared preferences
+                if (userScore >= highScore) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("high_score", userScore);
+                    editor.apply();
 
-            startTextview.setText("Next!");
-            messageTextview.setText("Good Job!");
-            messageTextview.setTextColor(Color.parseColor("#49ff89"));
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            breakLayout.setVisibility(View.VISIBLE);
-            breakLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Display pattern to user
-                    startPattern();
+                    highScore = sharedPref.getInt("high_score", 0);
                 }
-            });
 
-            // TODO: remove this temp
-            guessTextview.setText(patternGuess);
+                startTextview.setText("Next!");
+                messageTextview.setText("Good Job!");
+                messageTextview.setTextColor(Color.parseColor("#49ff89"));
+                scoreTextview.setText("Your Score: " + userScore);
+                highscoreTextview.setText("High Score: " + highScore);
+
+                scoreTextview.setText("Your Score: " + userScore);
+                highscoreTextview.setText("High Score: " + highScore);
+
+                breakLayout.setVisibility(View.VISIBLE);
+                breakLayout.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        //Display pattern to user
+                        startPattern();
+                    }
+                });
+
+                // TODO: remove this temp
+                guessTextview.setText(patternGuess);
+
 
 
         } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals(String.valueOf(press))) {
