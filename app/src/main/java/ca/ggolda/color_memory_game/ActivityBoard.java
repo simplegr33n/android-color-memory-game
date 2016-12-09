@@ -8,10 +8,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -45,8 +45,13 @@ public class ActivityBoard extends AppCompatActivity {
     private TextView guessTextview;
 
     private LinearLayout gameBoard;
-    private LinearLayout startLayout;
-    private TextView startButton;
+    private RelativeLayout breakLayout;
+
+    private TextView startTextview;
+    private TextView messageTextview;
+    private TextView scoreTextview;
+    private TextView highscoreTextview;
+
     private View redButton;
     private View yellowButton;
     private View blueButton;
@@ -71,6 +76,7 @@ public class ActivityBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_layout);
 
+        // initialize MobileAds
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6262252551936427~5382545595");
 
         // Request add and load into adView
@@ -88,8 +94,15 @@ public class ActivityBoard extends AppCompatActivity {
         guessTextview = (TextView) findViewById(R.id.guess_textview);
 
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
-        startLayout = (LinearLayout) findViewById(R.id.StartLayout);
-        startButton = (TextView) findViewById(R.id.start_button);
+        breakLayout = (RelativeLayout) findViewById(R.id.BreakLayout);
+
+        startTextview = (TextView) findViewById(R.id.start_textview);
+        messageTextview = (TextView) findViewById(R.id.message_textview);
+        scoreTextview = (TextView) findViewById(R.id.score_textview);
+        highscoreTextview = (TextView) findViewById(R.id.highscore_textview);
+
+
+
         redButton = (View) findViewById(R.id.red_button);
         yellowButton = (View) findViewById(R.id.yellow_button);
         blueButton = (View) findViewById(R.id.blue_button);
@@ -100,7 +113,7 @@ public class ActivityBoard extends AppCompatActivity {
         patternString.setText(PatternString);
 
         //Display pattern to user
-        startButton.setOnClickListener(new View.OnClickListener() {
+        breakLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startPattern();
             }
@@ -112,9 +125,9 @@ public class ActivityBoard extends AppCompatActivity {
         // Disable color buttons for pattern display duration
         disableButtons();
 
-        //Return background black pattern start
+        // Set background black for pattern display
         gameBoard.setBackgroundColor(Color.parseColor("#000000"));
-        startLayout.setVisibility(View.GONE);
+        breakLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String
         Random r = new Random();
@@ -190,9 +203,6 @@ public class ActivityBoard extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
-                    //Make background white on-pressed
-                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
                     // send guess to guessPress() function
                     guessPress(1);
 
@@ -200,7 +210,7 @@ public class ActivityBoard extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return background black on-released
-                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 } else return false;
 
@@ -214,9 +224,6 @@ public class ActivityBoard extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
-                    //Make background white on-pressed
-                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
                     // send guess to guessPress() function
                     guessPress(2);
 
@@ -224,7 +231,7 @@ public class ActivityBoard extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return background black on-released
-                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 } else return false;
 
@@ -238,9 +245,6 @@ public class ActivityBoard extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
-                    //Make background white on-pressed
-                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
                     // send guess to guessPress() function
                     guessPress(3);
 
@@ -248,7 +252,7 @@ public class ActivityBoard extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return background black on-released
-                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 } else return false;
 
@@ -262,16 +266,13 @@ public class ActivityBoard extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
-                    //Make background white on-pressed
-                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
-
                     // send guess to guessPress() function
                     guessPress(4);
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return background black on-released
-                    gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+                    gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 } else return false;
 
@@ -285,6 +286,10 @@ public class ActivityBoard extends AppCompatActivity {
 
     // function for testing and responding to guess
     private void guessPress (int press) {
+
+        //Make background light green on-pressed
+        gameBoard.setBackgroundColor(Color.parseColor("#000000"));
+
         if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + press).equals(PatternString)) {
             //Disable buttons while start menu up
             disableButtons();
@@ -300,12 +305,17 @@ public class ActivityBoard extends AppCompatActivity {
                 highScore = sharedPref.getInt("high_score", 0);
             }
 
-            startButton.setText("Good Job!\nYour Score: " + userScore + "\nHigh Score: " + highScore + "\nNext!");
+            startTextview.setText("Next!");
+            messageTextview.setText("Good Job!");
+            messageTextview.setTextColor(Color.parseColor("#49ff89"));
+            scoreTextview.setText("Your Score: " + userScore);
+            highscoreTextview.setText("High Score: " + highScore);
 
+            scoreTextview.setText("Your Score: " + userScore);
+            highscoreTextview.setText("High Score: " + highScore);
 
-
-            startLayout.setVisibility(View.VISIBLE);
-            startLayout.setOnClickListener(new View.OnClickListener() {
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Display pattern to user
                     startPattern();
@@ -327,9 +337,17 @@ public class ActivityBoard extends AppCompatActivity {
             //Disable buttons while start menu up
             disableButtons();
             PatternString = "";
-            startButton.setText("Good Game!\nYour Score: " + userScore + "\nHigh Score: " + highScore + "\nTry Again?");
-            startLayout.setVisibility(View.VISIBLE);
-            startLayout.setOnClickListener(new View.OnClickListener() {
+
+
+            startTextview.setText("Try Again?");
+            messageTextview.setText("Good Game!");
+            messageTextview.setTextColor(Color.parseColor("#FF8949!"));
+            scoreTextview.setText("Your Score: " + userScore);
+            highscoreTextview.setText("High Score: " + highScore);
+
+
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     resetGame();
                 }
@@ -344,10 +362,10 @@ public class ActivityBoard extends AppCompatActivity {
         PatternString = "";
         guessIndex = 0;
 
-        startButton.setText("Go!");
-        startButton.setVisibility(View.VISIBLE);
+        startTextview.setText("Go!");
+        startTextview.setVisibility(View.VISIBLE);
         //Display pattern to user
-        startButton.setOnClickListener(new View.OnClickListener() {
+        startTextview.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startPattern();
             }
@@ -415,6 +433,9 @@ public class ActivityBoard extends AppCompatActivity {
             greenButton.setBackgroundColor(Color.parseColor("#49f436"));
             blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
             yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+
+            // Set background to ready color
+            gameBoard.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
             // Allow User to Guess
             guessPlay();

@@ -126,28 +126,72 @@
     Game Buttons -->
 
     <LinearLayout
-        android:id="@+id/StartLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d447464a"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/BreakLayout"
+            android:background="#d447464a"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp">
 
-            <TextView
-                android:id="@+id/start_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:attr/selectableItemBackground"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="GO!"
-                android:textColor="#FFF"
-                android:textSize="55sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/message_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    tools:text="Great Work!"
+                    android:textColor="#49ff89"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/start_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="GO!"
+                    android:textColor="#FFF"
+                    android:textSize="75sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/score_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    tools:text="Score: 3"
+                    android:textColor="#59ff46"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/highscore_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    tools:text="High: 12"
+                    android:textColor="#f6f44c"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
