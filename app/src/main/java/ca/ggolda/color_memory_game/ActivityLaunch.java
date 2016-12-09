@@ -35,7 +35,8 @@ public class ActivityLaunch extends AppCompatActivity {
         RelativeLayout classicButton = (RelativeLayout) findViewById(R.id.classic_button);
         classicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);;
+                Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
+                ;
                 startActivity(intent);
 
             }
@@ -44,25 +45,28 @@ public class ActivityLaunch extends AppCompatActivity {
         RelativeLayout destijlButton = (RelativeLayout) findViewById(R.id.destijl_button);
         destijlButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);;
+                Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);
+                ;
                 startActivity(intent);
             }
         });
-
-
 
 
         // get current high score from shared preferences
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
         scoreClassic = sharedPref.getInt("highscore_classic", 0);
         scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
-        // set high score to high score views
-        String classicHigh = "High Score: " + scoreClassic;
-        String destijlHigh = "High Score: " + scoreDestijl;
-        classicScore = (TextView) findViewById(R.id.classic_score);
-        classicScore.setText(classicHigh);
-        destijlScore = (TextView) findViewById(R.id.destijl_score);
-        destijlScore.setText(destijlHigh);
+        // set high score to high score views if not 0
+        if (scoreClassic != 0) {
+            String classicHigh = String.valueOf(scoreClassic);
+            classicScore = (TextView) findViewById(R.id.classic_score);
+            classicScore.setText(classicHigh);
+        }
+        if (scoreDestijl != 0) {
+            String destijlHigh = String.valueOf(scoreDestijl);
+            destijlScore = (TextView) findViewById(R.id.destijl_score);
+            destijlScore.setText(destijlHigh);
+        }
 
 
     }
@@ -75,11 +79,17 @@ public class ActivityLaunch extends AppCompatActivity {
         // get current high score from shared preferences
         scoreClassic = sharedPref.getInt("highscore_classic", 0);
         scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
-        String classicHigh = "High Score: " + scoreClassic;
-        String destijlHigh = "High Score: " + scoreDestijl;
-        // set high score to high score views
-        classicScore.setText(classicHigh);
-        destijlScore.setText(destijlHigh);
+        // set high score to high score views if not 0
+        if (scoreClassic != 0) {
+            String classicHigh = String.valueOf(scoreClassic);
+            classicScore = (TextView) findViewById(R.id.classic_score);
+            classicScore.setText(classicHigh);
+        }
+        if (scoreDestijl != 0) {
+            String destijlHigh = String.valueOf(scoreDestijl);
+            classicScore = (TextView) findViewById(R.id.destijl_score);
+            classicScore.setText(destijlHigh);
+        }
 
 
     }
