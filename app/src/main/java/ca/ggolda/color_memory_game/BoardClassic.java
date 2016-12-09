@@ -21,7 +21,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.Random;
 
 
-public class BoardBasic extends AppCompatActivity {
+public class BoardClassic extends AppCompatActivity {
 
     private Handler patternHandler;
 
@@ -74,7 +74,7 @@ public class BoardBasic extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.board_layout);
+        setContentView(R.layout.board_classic);
 
         // initialize MobileAds
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6262252551936427~5382545595");
@@ -125,7 +125,7 @@ public class BoardBasic extends AppCompatActivity {
         disableButtons();
 
         // Set background black for pattern display
-        gameBoard.setBackgroundColor(Color.parseColor("#b7b6b6"));
+        gameBoard.setBackgroundColor(Color.parseColor("#46423C"));
         breakLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String

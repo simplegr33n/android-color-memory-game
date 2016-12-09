@@ -114,7 +114,7 @@ public class BoardDeStijl extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.board_de_stijl);
+        setContentView(R.layout.board_destijl);
 
         // initialize MobileAds
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-6262252551936427~5382545595");
@@ -126,7 +126,7 @@ public class BoardDeStijl extends AppCompatActivity {
 
         // get current high score from shared preferences
         sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        highScore = sharedPref.getInt("high_score_de_stijl", 0);
+        highScore = sharedPref.getInt("high_score_destijl", 0);
         sleepTime = sharedPref.getInt("sleep_time", 850);
 
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
@@ -176,7 +176,7 @@ public class BoardDeStijl extends AppCompatActivity {
         disableButtons();
 
         // Set background black for pattern display
-        gameBoard.setBackgroundColor(Color.parseColor("#B7B6B6"));
+        gameBoard.setBackgroundColor(Color.parseColor("#46423C"));
         breakLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the patternList
@@ -675,10 +675,10 @@ public class BoardDeStijl extends AppCompatActivity {
             // if new usesScore beats old high score, change value in shared preferences
             if (userScore >= highScore) {
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("high_score_de_stijl", userScore);
+                editor.putInt("high_score_destijl", userScore);
                 editor.apply();
 
-                highScore = sharedPref.getInt("high_score_de_stijl", 0);
+                highScore = sharedPref.getInt("high_score_destijl", 0);
             }
 
             startTextview.setText("Next!");

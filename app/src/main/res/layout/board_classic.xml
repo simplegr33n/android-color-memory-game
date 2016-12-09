@@ -131,6 +131,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            tools:visibility="gone"
             android:id="@+id/BreakLayout"
             android:background="#d447464a"
             android:layout_width="match_parent"
