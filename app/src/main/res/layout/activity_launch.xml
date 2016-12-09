@@ -19,10 +19,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/classic_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="235dp"
             android:layout_gravity="center">
 
 
@@ -33,24 +33,41 @@
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/board_basic" />
 
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Classic"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="#83afba"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/classic_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="High Score: 0"
-            android:textColor="#54f25c"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Classic"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/classic_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="High Score: 0"
+                    android:textColor="#0b0b0b"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="235dp"
+                android:background="?android:attr/selectableItemBackground" />
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -64,10 +81,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/destijl_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="235dp"
             android:layout_gravity="center">
 
             <ImageView
@@ -75,26 +92,42 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
+                android:id="@+id/destijl_icon"
                 android:src="@drawable/board_destijl" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#628189"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="De Stijl"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="De Stijl"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/destijl_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="High Score: 0"
-            android:textColor="#54f25c"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/destijl_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="High Score: 0"
+                    android:textColor="#54f25c"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="235dp"
+                android:background="?android:attr/selectableItemBackground" />
+
+
+        </RelativeLayout>
 
 
     </LinearLayout>

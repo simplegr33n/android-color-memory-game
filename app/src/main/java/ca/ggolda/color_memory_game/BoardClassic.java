@@ -85,8 +85,8 @@ public class BoardClassic extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         // get current high score from shared preferences
-        sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        highScore = sharedPref.getInt("high_score_basic", 0);
+        sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
+        highScore = sharedPref.getInt("highscore_classic", 0);
         sleepTime = sharedPref.getInt("sleep_time", 850);
 
         patternString = (TextView) findViewById(R.id.pattern_textview);
@@ -309,12 +309,13 @@ public class BoardClassic extends AppCompatActivity {
             userScore = patternGuess.length();
 
             // if new usesScore beats old high score, change value in shared preferences
-            if (userScore >= highScore) {
+            if (userScore > highScore) {
+
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("high_score_basic", userScore);
+                editor.putInt("highscore_classic", userScore);
                 editor.apply();
 
-                highScore = sharedPref.getInt("high_score_basic", 0);
+                highScore = sharedPref.getInt("highscore_classic", 0);
             }
 
             startTextview.setText("Next!");

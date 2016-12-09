@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -18,8 +19,6 @@ public class ActivityLaunch extends AppCompatActivity {
 
     SharedPreferences sharedPref;
 
-    private LinearLayout classicButton;
-    private LinearLayout destijlButton;
 
     private TextView classicScore;
     private TextView destijlScore;
@@ -33,7 +32,7 @@ public class ActivityLaunch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-        classicButton = (LinearLayout) findViewById(R.id.classic_button);
+        RelativeLayout classicButton = (RelativeLayout) findViewById(R.id.classic_button);
         classicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);;
@@ -42,7 +41,7 @@ public class ActivityLaunch extends AppCompatActivity {
             }
         });
 
-        destijlButton = (LinearLayout) findViewById(R.id.destijl_button);
+        RelativeLayout destijlButton = (RelativeLayout) findViewById(R.id.destijl_button);
         destijlButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);;
@@ -52,18 +51,36 @@ public class ActivityLaunch extends AppCompatActivity {
 
 
 
+
         // get current high score from shared preferences
-        // TODO: cross activity shared prefs so i can actually see scores here
-        sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        scoreClassic = sharedPref.getInt("high_score_classic", 0);
-        scoreDestijl = sharedPref.getInt("high_score_destijl", 0);
+        sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
+        scoreClassic = sharedPref.getInt("highscore_classic", 0);
+        scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
         // set high score to high score views
+        String classicHigh = "High Score: " + scoreClassic;
+        String destijlHigh = "High Score: " + scoreDestijl;
         classicScore = (TextView) findViewById(R.id.classic_score);
-        classicScore.setText("High Score: " + scoreClassic);
+        classicScore.setText(classicHigh);
         destijlScore = (TextView) findViewById(R.id.destijl_score);
-        destijlScore.setText("High Score: " + scoreDestijl);
+        destijlScore.setText(destijlHigh);
+
 
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // get current high score from shared preferences
+        scoreClassic = sharedPref.getInt("highscore_classic", 0);
+        scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
+        String classicHigh = "High Score: " + scoreClassic;
+        String destijlHigh = "High Score: " + scoreDestijl;
+        // set high score to high score views
+        classicScore.setText(classicHigh);
+        destijlScore.setText(destijlHigh);
+
+
+    }
 }

@@ -125,8 +125,8 @@ public class BoardDeStijl extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         // get current high score from shared preferences
-        sharedPref = this.getPreferences(this.MODE_PRIVATE);
-        highScore = sharedPref.getInt("high_score_destijl", 0);
+        sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
+        highScore = sharedPref.getInt("highscore_destijl", 0);
         sleepTime = sharedPref.getInt("sleep_time", 850);
 
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
@@ -675,10 +675,10 @@ public class BoardDeStijl extends AppCompatActivity {
             // if new usesScore beats old high score, change value in shared preferences
             if (userScore >= highScore) {
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("high_score_destijl", userScore);
+                editor.putInt("highscore_destijl", userScore);
                 editor.apply();
 
-                highScore = sharedPref.getInt("high_score_destijl", 0);
+                highScore = sharedPref.getInt("highscore_destijl", 0);
             }
 
             startTextview.setText("Next!");
