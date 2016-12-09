@@ -46,7 +46,6 @@ public class BoardDeStijl extends AppCompatActivity {
     private LinearLayout gameBoard;
     private RelativeLayout breakLayout;
 
-    private TextView startTextview;
     private TextView messageTextview;
     private TextView scoreTextview;
     private TextView highscoreTextview;
@@ -132,10 +131,16 @@ public class BoardDeStijl extends AppCompatActivity {
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
         breakLayout = (RelativeLayout) findViewById(R.id.BreakLayout);
 
-        startTextview = (TextView) findViewById(R.id.start_textview);
-        messageTextview = (TextView) findViewById(R.id.message_textview);
-        scoreTextview = (TextView) findViewById(R.id.score_textview);
-        highscoreTextview = (TextView) findViewById(R.id.highscore_textview);
+
+        messageTextview = (TextView) findViewById(R.id.message);
+        scoreTextview = (TextView) findViewById(R.id.score);
+        // TODO: Maybe replace this with a rounded star somehow... FontAwesome?
+        scoreTextview.setTextSize(94);
+        scoreTextview.setText("GO");
+        highscoreTextview = (TextView) findViewById(R.id.highscore);
+        if (highScore != 0) {
+            highscoreTextview.setText(String.valueOf(highScore));
+        }
 
         patternList = new ArrayList<Integer>();
 
@@ -165,6 +170,9 @@ public class BoardDeStijl extends AppCompatActivity {
         //Display pattern to user
         breakLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                // increase textsize for number display
+                scoreTextview.setTextSize(164);
                 startPattern();
             }
         });
@@ -176,7 +184,7 @@ public class BoardDeStijl extends AppCompatActivity {
         disableButtons();
 
         // Set background black for pattern display
-        gameBoard.setBackgroundColor(Color.parseColor("#46423C"));
+        gameBoard.setBackgroundColor(Color.parseColor("#3C3B3B"));
         breakLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the patternList
@@ -270,6 +278,79 @@ public class BoardDeStijl extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    // function for testing and responding to guess
+    private void guessPress(int press) {
+        Log.e("INFO", "guessList.size(): " + guessList.size());
+        Log.e("INFO", "patternList.size(): " + patternList.size());
+        Log.e("INFO", "patternList last: " + patternList.get(patternList.size() - 1));
+        Log.e("PATTERNINFO", "" + patternList);
+
+        if (guessList.size() == (patternList.size() - 1) && (patternList.get(patternList.size() - 1)).equals(press)) {
+            //Disable buttons while start menu up
+            disableButtons();
+
+            scoreTextview.setTextColor(Color.parseColor("#FFFFFF"));
+
+            guessList.add(press);
+
+            userScore = guessList.size();
+
+            // if new usesScore beats old high score, change value in shared preferences
+            if (userScore >= highScore) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("highscore_destijl", userScore);
+                editor.apply();
+
+                highScore = sharedPref.getInt("highscore_destijl", 0);
+            }
+
+
+            messageTextview.setText("Great!");
+            messageTextview.setTextColor(Color.parseColor("#e0ff8c"));
+            scoreTextview.setText(String.valueOf(userScore));
+            highscoreTextview.setText(String.valueOf(highScore));
+
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Display pattern to user
+                    startPattern();
+                }
+            });
+
+
+        } else if (((patternList.get(guessIndex))).equals(press)) {
+            guessList.add(press);
+            guessIndex = guessIndex + 1;
+
+
+        } else {
+            //Disable buttons while start menu up
+            disableButtons();
+            patternList = new ArrayList<Integer>();
+
+            messageTextview.setTextColor(Color.parseColor("#FF8949"));
+            messageTextview.setText("Good\nGame!");
+
+            scoreTextview.setTextColor(Color.parseColor("#FF0000"));
+            scoreTextview.setText(String.valueOf(userScore));
+
+
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    patternList = new ArrayList<Integer>();
+                    guessIndex = 0;
+                    userScore = 0;
+
+                    startPattern();
+                }
+            });
+
+        }
+
     }
 
     private void guessPlay() {
@@ -651,85 +732,6 @@ public class BoardDeStijl extends AppCompatActivity {
 
     }
 
-
-    // function for testing and responding to guess
-    private void guessPress(int press) {
-        Log.e("INFO", "guessList.size(): " + guessList.size());
-        Log.e("INFO", "patternList.size(): " + patternList.size());
-        Log.e("INFO", "patternList last: " + patternList.get(patternList.size() - 1));
-        Log.e("PATTERNINFO", "" + patternList);
-
-        if (guessList.size() == (patternList.size() - 1) && (patternList.get(patternList.size() - 1)).equals(press)) {
-
-            //Disable buttons while start menu up
-            disableButtons();
-
-            guessList.add(press);
-
-            Log.e("INFO", "guessList last: " + guessList.get(guessList.size() - 1));
-            Log.e("GUESSINFO", "" + guessList);
-
-
-            userScore = guessList.size();
-
-            // if new usesScore beats old high score, change value in shared preferences
-            if (userScore >= highScore) {
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("highscore_destijl", userScore);
-                editor.apply();
-
-                highScore = sharedPref.getInt("highscore_destijl", 0);
-            }
-
-            startTextview.setText("Next!");
-            messageTextview.setText("Good Job!");
-            messageTextview.setTextColor(Color.parseColor("#49ff89"));
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            breakLayout.setVisibility(View.VISIBLE);
-            breakLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Display pattern to user
-                    startPattern();
-                }
-            });
-
-
-        } else if (((patternList.get(guessIndex))).equals(press)) {
-            guessList.add(press);
-            guessIndex = guessIndex + 1;
-
-
-        } else {
-            //Disable buttons while start menu up
-            disableButtons();
-            patternList = new ArrayList<Integer>();
-
-
-            startTextview.setText("Try Again?");
-            messageTextview.setText("Good Game!");
-            messageTextview.setTextColor(Color.parseColor("#FF8949"));
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-
-            breakLayout.setVisibility(View.VISIBLE);
-            breakLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    patternList = new ArrayList<Integer>();
-                    guessIndex = 0;
-
-                    startPattern();
-                }
-            });
-
-        }
-
-    }
 
 
     // Set views for animateFlash() function

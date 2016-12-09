@@ -119,82 +119,76 @@
 
     </LinearLayout>
 
-    <!-- START button
-    Careful, as Android Studio
-    Keeps seeming to move this
-    So it is hidden behind the
-    Color Buttons -->
+    <!-- Break layout
+ Careful, as Android Studio
+ Keeps seeming to move this
+ So it is hidden behind the
+ Color Buttons -->
 
     <LinearLayout
+        tools:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
-            tools:visibility="gone"
             android:id="@+id/BreakLayout"
-            android:background="#d447464a"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#d447464a"
+            android:gravity="center"
             android:paddingBottom="10dp">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:textColor="#FFF"
+                android:textSize="164dp"
+                android:textStyle="bold"
+                tools:text="1" />
 
-                <TextView
-                    android:id="@+id/message_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    tools:text="Great Work!"
-                    android:textColor="#49ff89"
-                    android:textSize="40sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/start_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="GO!"
-                    android:textColor="#FFF"
-                    android:textSize="75sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="175dp"
+                android:layout_height="270dp"
+                android:gravity="center"
+                tools:text="1"
+                android:textStyle="bold"
+                android:textSize="44dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="12dp"
+                android:id="@+id/highscore" />
 
-                <TextView
-                    android:id="@+id/score_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    tools:text="Score: 3"
-                    android:textColor="#59ff46"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/highscore_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    tools:text="High: 12"
-                    android:textColor="#f6f44c"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="Great!"
+                android:textStyle="bold"
+                android:textSize="44dp"
+                android:textColor="#e0ff8c"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_above="@+id/adView"
+                android:layout_marginBottom="80dp"
+                android:layout_marginRight="28dp"
+                android:id="@+id/message" />
 
-            </LinearLayout>
+
+            <!-- setting to invisible for aesthetics for now -->
 
             <com.google.android.gms.ads.AdView
+                android:visibility="invisible"
                 android:id="@+id/adView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -203,9 +197,21 @@
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/banner_ad_unit_id" />
 
+            <TextView
+                android:id="@+id/boardname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textSize="44dp"
+                android:text="Classic"
+                android:textStyle="bold"
+                android:layout_marginLeft="26dp"
+                android:layout_marginBottom="30dp"
+                android:layout_alignParentBottom="true" />
+
+
         </RelativeLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>

@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.Random;
+import java.util.StringTokenizer;
 
 
 public class BoardClassic extends AppCompatActivity {
@@ -47,7 +48,6 @@ public class BoardClassic extends AppCompatActivity {
     private LinearLayout gameBoard;
     private RelativeLayout breakLayout;
 
-    private TextView startTextview;
     private TextView messageTextview;
     private TextView scoreTextview;
     private TextView highscoreTextview;
@@ -96,10 +96,15 @@ public class BoardClassic extends AppCompatActivity {
         gameBoard = (LinearLayout) findViewById(R.id.GameBoard);
         breakLayout = (RelativeLayout) findViewById(R.id.BreakLayout);
 
-        startTextview = (TextView) findViewById(R.id.start_textview);
-        messageTextview = (TextView) findViewById(R.id.message_textview);
-        scoreTextview = (TextView) findViewById(R.id.score_textview);
-        highscoreTextview = (TextView) findViewById(R.id.highscore_textview);
+        messageTextview = (TextView) findViewById(R.id.message);
+
+        scoreTextview = (TextView) findViewById(R.id.score);
+        scoreTextview.setText("GO");
+
+        highscoreTextview = (TextView) findViewById(R.id.highscore);
+        if (highScore != 0) {
+            highscoreTextview.setText(String.valueOf(highScore));
+        }
 
 
         redButton = (View) findViewById(R.id.red_button);
@@ -125,7 +130,7 @@ public class BoardClassic extends AppCompatActivity {
         disableButtons();
 
         // Set background black for pattern display
-        gameBoard.setBackgroundColor(Color.parseColor("#46423C"));
+        gameBoard.setBackgroundColor(Color.parseColor("#3C3B3B"));
         breakLayout.setVisibility(View.GONE);
 
         // Add a Random value to the end of the Pattern String
@@ -194,6 +199,80 @@ public class BoardClassic extends AppCompatActivity {
             }
         }
     }
+
+    // function for testing and responding to guess
+    private void guessPress(int press) {
+
+        if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + press).equals(PatternString)) {
+
+            //Disable buttons while start menu up
+            disableButtons();
+
+            patternGuess = patternGuess + press;
+            userScore = patternGuess.length();
+
+            // if new usesScore beats old high score, change value in shared preferences
+            if (userScore > highScore) {
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("highscore_classic", userScore);
+                editor.apply();
+
+                highScore = sharedPref.getInt("highscore_classic", 0);
+            }
+
+
+            messageTextview.setText("Good\nJob!");
+            messageTextview.setTextColor(Color.parseColor("#49ff89"));
+            scoreTextview.setText(String.valueOf(userScore));
+            highscoreTextview.setText(String.valueOf(highScore));
+
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Display pattern to user
+                    startPattern();
+                }
+            });
+
+            // TODO: remove this temp
+            guessTextview.setText(patternGuess);
+
+
+        } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals(String.valueOf(press))) {
+            patternGuess = patternGuess + press;
+            guessIndex = guessIndex + 1;
+
+            // TODO: remove this temp
+            guessTextview.setText(patternGuess);
+
+        } else {
+            //Disable buttons while start menu up
+            disableButtons();
+            PatternString = "";
+
+            messageTextview.setTextColor(Color.parseColor("#D2DBF9"));
+            messageTextview.setText("Good\nGame!");
+
+
+            scoreTextview.setTextColor(Color.parseColor("#FF0000"));
+            scoreTextview.setText(String.valueOf(userScore));
+
+            breakLayout.setVisibility(View.VISIBLE);
+            breakLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    PatternString = "";
+                    guessIndex = 0;
+                    userScore = 0;
+
+                    startPattern();
+                }
+            });
+
+        }
+
+    }
+
 
     private void guessPlay() {
 
@@ -293,83 +372,6 @@ public class BoardClassic extends AppCompatActivity {
                 return true;
             }
         });
-
-    }
-
-
-    // function for testing and responding to guess
-    private void guessPress(int press) {
-
-        if (patternGuess.length() == (PatternString.length() - 1) && (patternGuess + press).equals(PatternString)) {
-
-            //Disable buttons while start menu up
-            disableButtons();
-
-            patternGuess = patternGuess + press;
-            userScore = patternGuess.length();
-
-            // if new usesScore beats old high score, change value in shared preferences
-            if (userScore > highScore) {
-
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("highscore_classic", userScore);
-                editor.apply();
-
-                highScore = sharedPref.getInt("highscore_classic", 0);
-            }
-
-            startTextview.setText("Next!");
-            messageTextview.setText("Good Job!");
-            messageTextview.setTextColor(Color.parseColor("#49ff89"));
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-            breakLayout.setVisibility(View.VISIBLE);
-            breakLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Display pattern to user
-                    startPattern();
-                }
-            });
-
-            // TODO: remove this temp
-            guessTextview.setText(patternGuess);
-
-
-        } else if ((String.valueOf(PatternString.charAt(guessIndex))).equals(String.valueOf(press))) {
-            patternGuess = patternGuess + press;
-            guessIndex = guessIndex + 1;
-
-            // TODO: remove this temp
-            guessTextview.setText(patternGuess);
-
-        } else {
-            //Disable buttons while start menu up
-            disableButtons();
-            PatternString = "";
-
-
-            startTextview.setText("Try Again?");
-            messageTextview.setText("Good Game!");
-            messageTextview.setTextColor(Color.parseColor("#FF8949"));
-            scoreTextview.setText("Your Score: " + userScore);
-            highscoreTextview.setText("High Score: " + highScore);
-
-
-            breakLayout.setVisibility(View.VISIBLE);
-            breakLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    PatternString = "";
-                    guessIndex = 0;
-
-                    startPattern();
-                }
-            });
-
-        }
 
     }
 
