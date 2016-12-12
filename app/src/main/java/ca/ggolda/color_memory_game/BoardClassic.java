@@ -157,7 +157,14 @@ public class BoardClassic extends AppCompatActivity {
     }
 
 
+
+
     public void startPattern() {
+        // Log as last_play
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("last_play", 1);
+        editor.apply();
+
         // Disable color buttons for pattern display duration
         disableButtons();
 
