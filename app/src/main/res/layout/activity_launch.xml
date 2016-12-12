@@ -57,15 +57,6 @@
                     android:src="@drawable/rectangle" />
 
 
-                <ImageView
-                    android:id="@+id/left_locked"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:alpha=".75"
-                    android:src="@drawable/locked"
-                    tools:visibility="gone" />
-
 
             </RelativeLayout>
 
@@ -203,11 +194,10 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/board_destijl"
-                android:alpha=".25"/>
+                android:src="@drawable/board_destijl"/>
 
             <ImageView
-                android:id="@+id/destijl_locked"
+                android:id="@+id/two_locked"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
@@ -226,14 +216,25 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/next_small"
+                android:id="@+id/calc_small"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:alpha=".95"
+                android:src="@drawable/rectangle"/>
+
+            <ImageView
+                android:id="@+id/three_locked"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".85"
                 android:src="@drawable/locked" />
+
+
 
         </RelativeLayout>
 
@@ -242,14 +243,25 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/next4_small"
+                android:id="@+id/four_small"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:alpha=".95"
+                android:src="@drawable/rectangle"/>
+
+            <ImageView
+                android:id="@+id/four_locked"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".85"
                 android:src="@drawable/locked" />
+
+
 
         </RelativeLayout>
 
@@ -258,50 +270,82 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/next5_small"
+                android:id="@+id/five_small"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:alpha=".95"
+                android:src="@drawable/rectangle"/>
+
+            <ImageView
+                android:id="@+id/five_locked"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".85"
                 android:src="@drawable/locked" />
 
-        </RelativeLayout>
 
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/next6_small"
+                android:id="@+id/six_small"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:alpha=".95"
+                android:src="@drawable/rectangle"/>
+
+            <ImageView
+                android:id="@+id/six_locked"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".85"
                 android:src="@drawable/locked" />
 
-        </RelativeLayout>
 
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/next7_small"
+                android:id="@+id/seven_small"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:alpha=".95"
+                android:src="@drawable/rectangle"/>
+
+            <ImageView
+                android:id="@+id/seven_locked"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:alpha=".85"
                 android:src="@drawable/locked" />
 
+
+
         </RelativeLayout>
+
 
 
     </LinearLayout>
