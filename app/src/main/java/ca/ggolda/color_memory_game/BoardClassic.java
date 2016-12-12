@@ -3,8 +3,11 @@ package ca.ggolda.color_memory_game;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -70,6 +74,30 @@ public class BoardClassic extends AppCompatActivity {
     SharedPreferences sharedPref;
     private int highScore;
 
+    private MediaPlayer mp;
+
+    // create audio focus change listener
+    final AudioManager.OnAudioFocusChangeListener afChangeListener =
+            new AudioManager.OnAudioFocusChangeListener() {
+                public void onAudioFocusChange(int focusChange) {
+                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
+                            focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                        // Should pause, but too many errors, so just releasing. Fuck it. File is small
+                        // Can be called again quite easily.
+                        releaseAudio();
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                        // Resume playback
+                        // Actually I don't have this, because it seems that
+                        // Audio gets released and then causes a crash because there's nothing
+                        // to call .start() on.
+
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                        // Stop playback
+                        releaseAudio();
+                    }
+                }
+            };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +143,10 @@ public class BoardClassic extends AppCompatActivity {
         patternHandler = new Handler();
 
         patternString.setText(PatternString);
+
+
+
+
 
         //Display pattern to user
         breakLayout.setOnClickListener(new View.OnClickListener() {
@@ -285,6 +317,36 @@ public class BoardClassic extends AppCompatActivity {
                     redButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
+
+                    // Play sound on press
+                    // TODO: REFACTOR
+                    // TODO: remove lag
+                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    releaseAudio();
+                    // Request audio focus for playback
+                    int result = am.requestAudioFocus(afChangeListener,
+                            // Use the music stream.
+                            AudioManager.STREAM_MUSIC,
+                            // Request permanent focus.
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
+                        // Start playback.
+                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note1);
+                        mp.start();
+
+                        //OnCompletionListener to release the audio file after playback
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+                                releaseAudio();
+                            }
+                        });
+
+                    }
+
+
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
@@ -307,6 +369,35 @@ public class BoardClassic extends AppCompatActivity {
                 {
                     //Make background white on-pressed
                     greenButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+
+                    // Play sound on press
+                    // TODO: REFACTOR
+                    // TODO: remove lag
+                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    releaseAudio();
+                    // Request audio focus for playback
+                    int result = am.requestAudioFocus(afChangeListener,
+                            // Use the music stream.
+                            AudioManager.STREAM_MUSIC,
+                            // Request permanent focus.
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
+                        // Start playback.
+                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note2);
+                        mp.start();
+
+                        //OnCompletionListener to release the audio file after playback
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+                                releaseAudio();
+                            }
+                        });
+
+                    }
 
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
@@ -333,6 +424,36 @@ public class BoardClassic extends AppCompatActivity {
                     blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
+                    // Play sound on press
+                    // TODO: REFACTOR
+                    // TODO: remove lag
+                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    releaseAudio();
+                    // Request audio focus for playback
+                    int result = am.requestAudioFocus(afChangeListener,
+                            // Use the music stream.
+                            AudioManager.STREAM_MUSIC,
+                            // Request permanent focus.
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
+                        // Start playback.
+                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note3);
+                        mp.start();
+
+                        //OnCompletionListener to release the audio file after playback
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+                                releaseAudio();
+                            }
+                        });
+
+                    }
+
+
+
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
                 {
                     //Return button background on-released
@@ -356,6 +477,36 @@ public class BoardClassic extends AppCompatActivity {
                 {
                     //Make background white on-pressed
                     yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+
+                    // Play sound on press
+                    // TODO: REFACTOR
+                    // TODO: remove lag
+                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    releaseAudio();
+                    // Request audio focus for playback
+                    int result = am.requestAudioFocus(afChangeListener,
+                            // Use the music stream.
+                            AudioManager.STREAM_MUSIC,
+                            // Request permanent focus.
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+
+                        // Start playback.
+                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note4);
+                        mp.start();
+
+                        //OnCompletionListener to release the audio file after playback
+                        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+                                releaseAudio();
+                            }
+                        });
+
+                    }
+
 
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
@@ -477,6 +628,19 @@ public class BoardClassic extends AppCompatActivity {
         greenButton.setBackgroundColor(Color.parseColor("#49f436"));
         blueButton.setBackgroundColor(Color.parseColor("#0000FF"));
         yellowButton.setBackgroundColor(Color.parseColor("#FFFB00"));
+    }
+
+    public void releaseAudio() {
+        if (mp != null) {
+            // Regardless of the current state of the media player, release its resources
+            // because we no longer need it.
+            mp.release();
+
+            // Set the media player back to null. For our code, we've decided that
+            // setting the media player to null is an easy way to tell that the media player
+            // is not configured to play an audio file at the moment.
+            mp = null;
+        }
     }
 }
 
