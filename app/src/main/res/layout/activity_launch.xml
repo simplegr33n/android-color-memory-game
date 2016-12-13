@@ -190,7 +190,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/board_classic" />
+                android:src="@drawable/board_classic_small" />
 
         </RelativeLayout>
 
@@ -205,7 +205,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/board_destijl"/>
+                android:src="@drawable/board_destijl_small"/>
 
             <ImageView
                 android:id="@+id/two_locked"
@@ -213,7 +213,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:alpha=".85"
-                android:src="@drawable/locked"
+                android:src="@drawable/locked_small"
                 android:layout_alignTop="@+id/destijl_small"
                 android:layout_alignLeft="@+id/destijl_small"
                 android:layout_alignStart="@+id/destijl_small" />
@@ -233,7 +233,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/board_pi"/>
+                android:src="@drawable/board_pi_small"/>
 
             <ImageView
                 android:id="@+id/three_locked"
@@ -243,7 +243,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
                 android:alpha=".85"
-                android:src="@drawable/locked" />
+                android:src="@drawable/locked_small" />
 
 
 
@@ -270,7 +270,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
                 android:alpha=".85"
-                android:src="@drawable/locked" />
+                android:src="@drawable/locked_small" />
 
 
 
@@ -297,7 +297,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
                 android:alpha=".85"
-                android:src="@drawable/locked" />
+                android:src="@drawable/locked_small" />
 
 
 
@@ -321,11 +321,11 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_marginBottom="8dp"
                 android:alpha=".85"
-                android:src="@drawable/locked" />
-
+                android:src="@drawable/locked_small"
+                android:layout_alignTop="@+id/six_small"
+                android:layout_alignLeft="@+id/six_small"
+                android:layout_alignStart="@+id/six_small" />
 
 
         </RelativeLayout>
@@ -351,7 +351,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
                 android:alpha=".85"
-                android:src="@drawable/locked" />
+                android:src="@drawable/locked_small" />
 
 
 
