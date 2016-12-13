@@ -4,6 +4,7 @@ package ca.ggolda.color_memory_game;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -643,6 +644,14 @@ public class BoardClassic extends AppCompatActivity {
             // is not configured to play an audio file at the moment.
             mp = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(BoardClassic.this, ActivityLaunch.class);
+        startActivity(intent);
+
+        return;
     }
 }
 

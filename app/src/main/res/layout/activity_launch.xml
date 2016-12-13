@@ -18,9 +18,9 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="4dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="12dp"
             android:alpha=".35"
             android:src="@drawable/settings" />
 
@@ -55,6 +55,14 @@
                     android:layout_gravity="center"
                     android:alpha=".35"
                     android:src="@drawable/rectangle" />
+
+                <ImageView
+                    android:id="@+id/left_locked"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:alpha=".45"
+                    android:src="@drawable/locked" />
 
 
 
@@ -142,7 +150,10 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:alpha=".45"
-                    android:src="@drawable/locked" />
+                    android:src="@drawable/locked"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
 
             </RelativeLayout>

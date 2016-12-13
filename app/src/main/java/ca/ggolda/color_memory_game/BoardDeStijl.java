@@ -3,6 +3,7 @@ package ca.ggolda.color_memory_game;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -1507,6 +1508,14 @@ public class BoardDeStijl extends AppCompatActivity {
         button16.setBackgroundColor(Color.parseColor("#4242AE"));
         button17.setBackgroundColor(Color.parseColor("#FF0000"));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(BoardDeStijl.this, ActivityLaunch.class);
+        startActivity(intent);
+
+        return;
     }
 }
 
