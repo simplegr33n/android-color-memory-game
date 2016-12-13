@@ -12,8 +12,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="14"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="right"
         android:orientation="horizontal">
 
@@ -29,11 +29,13 @@
     <LinearLayout
         android:id="@+id/swipeview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -73,7 +75,8 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="5"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="16dp"
@@ -83,32 +86,34 @@
             <RelativeLayout
                 android:id="@+id/center_button"
                 android:layout_width="wrap_content"
-                android:layout_height="235dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center">
 
 
-                <ImageView
-                    android:id="@+id/center_icon"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
-                    android:src="@drawable/board_classic" />
-
-
                 <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:background="?android:attr/selectableItemBackground" />
 
+
+                <ImageView
+                    android:id="@+id/center_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/board_classic"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
                 <ImageView
                     android:id="@+id/center_locked"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignTop="@+id/center_icon"
@@ -124,7 +129,8 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -163,21 +169,77 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/highscore"
-        android:layout_width="64dp"
-        android:layout_height="94dp"
-        android:layout_marginBottom="0dp"
-        android:gravity="center_horizontal"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        tools:text="13" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="3">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="#4d81a1"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:text="Your High: "
+                android:id="@+id/textView2" />
+
+            <TextView
+                android:layout_marginTop="6dp"
+                android:id="@+id/highscore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="#e0e1d6"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="13" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_horizontal"
+                android:textColor="#4ac377"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="World High: "
+                android:id="@+id/textView" />
+
+            <TextView
+                android:id="@+id/record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:gravity="center_horizontal"
+                android:textColor="#e0e1d6"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="24" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
+        android:layout_weight="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:gravity="center">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -361,9 +423,5 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6" />
 
 </LinearLayout>
