@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by gcgol on 12/08/2016.
@@ -74,6 +75,15 @@ public class ActivityLaunch extends AppCompatActivity {
         centerButton = (RelativeLayout) findViewById(R.id.center_button);
         swipeView = (LinearLayout) findViewById(R.id.swipeview);
 
+        ImageView settingsButton = (ImageView) findViewById(R.id.settings);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(ActivityLaunch.this, ActivitySettings.class);
+                startActivity(intent);
+            }
+        });
+
 
         // Set view on click of small icons
         //
@@ -98,7 +108,6 @@ public class ActivityLaunch extends AppCompatActivity {
                 setViews(3);
             }
         });
-
 
 
         twoLocked = (ImageView) findViewById(R.id.two_locked);

@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- Options Screen -->
+    <color name="options_background">#bcd2d6</color>
+    <color name="options_button_unpressed">#e1d6b5</color>
+
 
     <!-- Level 1: Classic Colors -->
     <color name="classic_red">#FF0000</color>

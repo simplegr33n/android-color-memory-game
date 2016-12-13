@@ -29,6 +29,8 @@
 
         <activity android:name=".BoardPi" android:screenOrientation="portrait"/>
 
+        <activity android:name=".ActivitySettings" android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
