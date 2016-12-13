@@ -124,7 +124,7 @@ public class BoardDeStijl extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        // get current high score from shared preferences
+        // get current high score and sleeptime from shared preferences
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
         highScore = sharedPref.getInt("highscore_destijl", 0);
         sleepTime = sharedPref.getInt("sleep_time", 850);
@@ -284,10 +284,6 @@ public class BoardDeStijl extends AppCompatActivity {
 
     // function for testing and responding to guess
     private void guessPress(int press) {
-        Log.e("INFO", "guessList.size(): " + guessList.size());
-        Log.e("INFO", "patternList.size(): " + patternList.size());
-        Log.e("INFO", "patternList last: " + patternList.get(patternList.size() - 1));
-        Log.e("PATTERNINFO", "" + patternList);
 
         if (guessList.size() == (patternList.size() - 1) && (patternList.get(patternList.size() - 1)).equals(press)) {
             //Disable buttons while start menu up
