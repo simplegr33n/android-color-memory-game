@@ -4,15 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.List;
 
 /**
  * Created by gcgol on 12/08/2016.
@@ -132,7 +128,9 @@ public class ActivityLaunch extends AppCompatActivity {
 
         //TODO: conditions for unlocking
         // Set conditions for unlocking De Stijl
-        if (scoreClassic == 5 && unlockedLevels == 1) {
+        if (scoreClassic >= 5 && unlockedLevels == 1) {
+            twoLocked.setVisibility(View.GONE);
+
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("unlocked_level", 2);
             editor.apply();
@@ -140,14 +138,18 @@ public class ActivityLaunch extends AppCompatActivity {
 
         // Set conditions for unlocking Pi
         // TODO: make the requirement a sum of 31
-        if (scoreDestijl + scoreClassic == 5 && unlockedLevels == 2) {
+        if (scoreDestijl + scoreClassic >= 10 && unlockedLevels == 2) {
+            threeLocked.setVisibility(View.GONE);
+
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("unlocked_level", 3);
             editor.apply();
         }
 
         // Set conditions for unlocking ?
-        if (scorePi == 31 && unlockedLevels == 3) {
+        if (scorePi >= 31 && unlockedLevels == 3) {
+            fourLocked.setVisibility(View.GONE);
+
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("unlocked_level", 4);
             editor.apply();
@@ -228,6 +230,11 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 centerButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        // Log as last_play
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("last_play", 1);
+                        editor.apply();
+
                         Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
                         startActivity(intent);
                     }
@@ -281,23 +288,29 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 centerImageview.setImageResource(R.drawable.board_destijl);
                 leftImageview.setImageResource(R.drawable.board_classic);
-                rightImageview.setImageResource(R.drawable.rectangle);
+                rightImageview.setImageResource(R.drawable.board_pi);
+
+                leftImageview.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setViews(1);
+                    }
+                });
 
                 if (unlockedLevels >= 2) {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     centerButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
+                            // Log as last_play
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putInt("last_play", 2);
+                            editor.apply();
+
                             Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);
                             startActivity(intent);
                         }
                     });
 
-                    leftImageview.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            setViews(1);
-                        }
-                    });
 
 
                 } else {
@@ -330,9 +343,15 @@ public class ActivityLaunch extends AppCompatActivity {
 
 
                 // TODO: make pi resource
-                centerImageview.setImageResource(R.drawable.rectangle);
+                centerImageview.setImageResource(R.drawable.board_pi);
                 leftImageview.setImageResource(R.drawable.board_destijl);
                 rightImageview.setImageResource(R.drawable.rectangle);
+
+                leftImageview.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setViews(2);
+                    }
+                });
 
 
                 if (unlockedLevels >= 3) {
@@ -341,6 +360,11 @@ public class ActivityLaunch extends AppCompatActivity {
                     threeLocked.setVisibility(View.GONE);
                     centerButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
+                            // Log as last_play
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putInt("last_play", 3);
+                            editor.apply();
+
                             Intent intent = new Intent(ActivityLaunch.this, BoardPi.class);
                             startActivity(intent);
                         }
