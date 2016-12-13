@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by gcgol on 12/08/2016.
  */
@@ -57,12 +59,7 @@ public class ActivityLaunch extends AppCompatActivity {
     private ImageView sevenLocked;
 
 
-    private boolean twoUnlocked = false;
-    private boolean threeUnlocked = false;
-    private boolean fourUnlocked = false;
-    private boolean fiveUnlocked = false;
-    private boolean sixUnlocked = false;
-    private boolean sevenUnlocked = false;
+    private int unlockedLevels;
 
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
@@ -84,23 +81,9 @@ public class ActivityLaunch extends AppCompatActivity {
         // Set view on click of small icons
         //
         levelOne = (ImageView) findViewById(R.id.classic_small);
-        levelOne.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setViews(1);
-            }
-        });
         levelTwo = (ImageView) findViewById(R.id.destijl_small);
-        levelTwo.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setViews(2);
-            }
-        });
         levelThree = (ImageView) findViewById(R.id.calc_small);
-        levelThree.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setViews(3);
-            }
-        });
+
 
 
         twoLocked = (ImageView) findViewById(R.id.two_locked);
@@ -137,6 +120,8 @@ public class ActivityLaunch extends AppCompatActivity {
 
         lastPlay = sharedPref.getInt("last_play", 1);
 
+        unlockedLevels = sharedPref.getInt("unlocked_level", 1);
+
         scoreClassic = sharedPref.getInt("highscore_classic", 0);
         scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
         scorePi = sharedPref.getInt("highscore_pi", 0);
@@ -147,20 +132,26 @@ public class ActivityLaunch extends AppCompatActivity {
 
         //TODO: conditions for unlocking
         // Set conditions for unlocking De Stijl
-        if (scoreClassic == 5) {
-            twoUnlocked = true;
+        if (scoreClassic == 5 && unlockedLevels == 1) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("unlocked_level", 2);
+            editor.apply();
         }
 
         // Set conditions for unlocking Pi
-        if (scoreDestijl == 5) {
-            threeUnlocked = true;
+        // TODO: make the requirement a sum of 31
+        if (scoreDestijl + scoreClassic == 5 && unlockedLevels == 2) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("unlocked_level", 3);
+            editor.apply();
         }
 
         // Set conditions for unlocking ?
-        if (scorePi == 5000) {
-            threeUnlocked = true;
+        if (scorePi == 31 && unlockedLevels == 3) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("unlocked_level", 4);
+            editor.apply();
         }
-
         // Set Views after getting values
         setViews(lastPlay);
 
@@ -168,19 +159,51 @@ public class ActivityLaunch extends AppCompatActivity {
 
     // Set views and locks
     private void setViews(int setView) {
-        if (twoUnlocked == true) {
+        unlockedLevels = sharedPref.getInt("unlocked_level", 1);
+
+        if (unlockedLevels == 2) {
+            levelOne.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(1);
+                }
+            });
             levelTwo.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     setViews(2);
                 }
             });
-        } else if (threeUnlocked == true) {
+        } else if (unlockedLevels == 3) {
+            levelOne.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(1);
+                }
+            });
+            levelTwo.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(2);
+                }
+            });
             levelThree.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     setViews(3);
                 }
             });
-        } else if (fourUnlocked == true) {
+        } else if (unlockedLevels == 4) {
+            levelOne.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(1);
+                }
+            });
+            levelTwo.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(2);
+                }
+            });
+            levelThree.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    setViews(3);
+                }
+            });
             levelFour.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     setViews(4);
@@ -192,6 +215,7 @@ public class ActivityLaunch extends AppCompatActivity {
         switch (setView) {
             case 1:
                 // set highscore to scoreClassic
+                highscoreTextview.setText("");
                 if (scoreClassic != 0) {
                     String classicHigh = String.valueOf(scoreClassic);
                     highscoreTextview.setText(classicHigh);
@@ -209,11 +233,17 @@ public class ActivityLaunch extends AppCompatActivity {
                     }
                 });
 
-                if (twoUnlocked == true) {
+                if (unlockedLevels >= 2) {
                     rightLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
 
-                } else if (threeUnlocked == true) {
+                    rightImageview.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            setViews(2);
+                        }
+                    });
+
+                } else if (unlockedLevels >= 3) {
                     rightLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
@@ -224,55 +254,11 @@ public class ActivityLaunch extends AppCompatActivity {
                         }
                     });
 
-                } else if (fourUnlocked == true) {
+                } else if (unlockedLevels >= 4) {
                     rightLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
                     fourLocked.setVisibility(View.GONE);
-                    centerButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
-                            startActivity(intent);
-                        }
-                    });
-
-                } else if (fiveUnlocked == true) {
-                    rightLocked.setVisibility(View.GONE);
-                    twoLocked.setVisibility(View.GONE);
-                    threeLocked.setVisibility(View.GONE);
-                    fourLocked.setVisibility(View.GONE);
-                    fiveLocked.setVisibility(View.GONE);
-
-                    centerButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
-                            startActivity(intent);
-                        }
-                    });
-
-                } else if (sixUnlocked == true) {
-                    rightLocked.setVisibility(View.GONE);
-                    twoLocked.setVisibility(View.GONE);
-                    threeLocked.setVisibility(View.GONE);
-                    fourLocked.setVisibility(View.GONE);
-                    fiveLocked.setVisibility(View.GONE);
-                    sixLocked.setVisibility(View.GONE);
-                    centerButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
-                            startActivity(intent);
-                        }
-                    });
-
-                } else if (sevenUnlocked == true) {
-                    rightLocked.setVisibility(View.GONE);
-                    twoLocked.setVisibility(View.GONE);
-                    threeLocked.setVisibility(View.GONE);
-                    fourLocked.setVisibility(View.GONE);
-                    fiveLocked.setVisibility(View.GONE);
-                    sixLocked.setVisibility(View.GONE);
-                    sevenLocked.setVisibility(View.GONE);
-
                     centerButton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
@@ -287,6 +273,7 @@ public class ActivityLaunch extends AppCompatActivity {
             case 2:
 
                 // set highscore to scoreClassic
+                highscoreTextview.setText("");
                 if (scoreDestijl != 0) {
                     highscoreTextview.setText(String.valueOf(scoreDestijl));
                 }
@@ -296,7 +283,7 @@ public class ActivityLaunch extends AppCompatActivity {
                 leftImageview.setImageResource(R.drawable.board_classic);
                 rightImageview.setImageResource(R.drawable.rectangle);
 
-                if (twoUnlocked == true) {
+                if (unlockedLevels >= 2) {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     centerButton.setOnClickListener(new View.OnClickListener() {
@@ -306,14 +293,27 @@ public class ActivityLaunch extends AppCompatActivity {
                         }
                     });
 
+                    leftImageview.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            setViews(1);
+                        }
+                    });
+
+
                 } else {
                     centerButton.setOnClickListener(null);
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
-                if (threeUnlocked == true) {
+                if (unlockedLevels >= 3) {
                     rightLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
+
+                    rightImageview.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            setViews(3);
+                        }
+                    });
                 } else {
                     rightLocked.setVisibility(View.VISIBLE);
                 }
@@ -321,10 +321,13 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 break;
             case 3:
+
                 // set highscore to scoreClassic
+                highscoreTextview.setText("");
                 if (scorePi != 0) {
                     highscoreTextview.setText(String.valueOf(scorePi));
                 }
+
 
                 // TODO: make pi resource
                 centerImageview.setImageResource(R.drawable.rectangle);
@@ -332,7 +335,7 @@ public class ActivityLaunch extends AppCompatActivity {
                 rightImageview.setImageResource(R.drawable.rectangle);
 
 
-                if (threeUnlocked == true) {
+                if (unlockedLevels >= 3) {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
@@ -348,7 +351,7 @@ public class ActivityLaunch extends AppCompatActivity {
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
-                if (fourUnlocked == true) {
+                if (unlockedLevels >= 4) {
                     rightLocked.setVisibility(View.GONE);
                 } else {
                     rightLocked.setVisibility(View.VISIBLE);
