@@ -31,6 +31,8 @@ public class ActivityLaunch extends AppCompatActivity {
 
     private TextView highscoreTextview;
     private TextView recordTextview;
+    private TextView levelName;
+
 
     private RelativeLayout centerButton;
     private LinearLayout swipeView;
@@ -84,6 +86,8 @@ public class ActivityLaunch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+
+        levelName = (TextView) findViewById(R.id.level_name);
 
         // Get user highscore
         highscoreTextview = (TextView) findViewById(R.id.highscore);
@@ -246,9 +250,23 @@ public class ActivityLaunch extends AppCompatActivity {
                                           public void onDataChange(DataSnapshot dataSnapshot) {
                                               classic_record = dataSnapshot.getValue(Integer.class);
 
-                                              SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("classic_record", classic_record);
-                                              editor.apply();
+                                              if (classic_record != null) {
+                                                  SharedPreferences.Editor editor = sharedPref.edit();
+                                                  editor.putInt("classic_record", classic_record);
+                                                  editor.apply();
+                                                  if (scoreClassic > classic_record) {
+                                                      mHighscoreDatabaseReference.child("classic").setValue(scoreClassic);
+                                                      getValues();
+                                                  }
+
+                                              } else if (classic_record == null || scoreClassic > 0) {
+                                                  mHighscoreDatabaseReference.child("classic").setValue(scoreClassic);
+                                                  getValues();
+
+                                              } else {
+                                                  classic_record = 0;
+                                              }
+
 
                                               getValues();
 
@@ -274,9 +292,22 @@ public class ActivityLaunch extends AppCompatActivity {
                                           public void onDataChange(DataSnapshot dataSnapshot) {
                                               de_stijl_record = dataSnapshot.getValue(Integer.class);
 
-                                              SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("de_stijl_record", de_stijl_record);
-                                              editor.apply();
+                                              if (de_stijl_record != null) {
+                                                  SharedPreferences.Editor editor = sharedPref.edit();
+                                                  editor.putInt("de_stijl_record", de_stijl_record);
+                                                  editor.apply();
+                                                  if (scoreDestijl > de_stijl_record) {
+                                                      mHighscoreDatabaseReference.child("de_stijl").setValue(scoreDestijl);
+                                                      getValues();
+                                                  }
+
+                                              } else if (de_stijl_record == null || scoreDestijl > 0) {
+                                                  mHighscoreDatabaseReference.child("de_stijl").setValue(scoreDestijl);
+                                                  getValues();
+
+                                              } else {
+                                                  de_stijl_record = 0;
+                                              }
 
                                               getValues();
 
@@ -301,17 +332,26 @@ public class ActivityLaunch extends AppCompatActivity {
                                           public void onDataChange(DataSnapshot dataSnapshot) {
                                               pi_record = dataSnapshot.getValue(Integer.class);
 
-                                              SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("pi_record", pi_record);
-                                              editor.apply();
+                                              if (pi_record != null) {
+                                                  SharedPreferences.Editor editor = sharedPref.edit();
+                                                  editor.putInt("pi_record", pi_record);
+                                                  editor.apply();
+                                                  if (scorePi > pi_record) {
+                                                      mHighscoreDatabaseReference.child("pi").setValue(scorePi);
+                                                      getValues();
+                                                  }
+
+                                              } else if (pi_record == null || scorePi > 0) {
+                                                  mHighscoreDatabaseReference.child("pi").setValue(scorePi);
+                                                  getValues();
+
+                                              } else {
+                                                  pi_record = 0;
+                                              }
 
                                               getValues();
 
-                                              //Set current world record
-                                              if (scorePi != 0 && pi_record == null || scorePi > Integer.valueOf(pi_record)) {
-                                                  mHighscoreDatabaseReference.child("pi").setValue(scorePi);
-                                                  getValues();
-                                              }
+
                                           }
 
                                           @Override
@@ -359,6 +399,8 @@ public class ActivityLaunch extends AppCompatActivity {
                     highscoreTextview.setText(String.valueOf(scoreClassic));
                 }
 
+                levelName.setText("Classic");
+
                 // Set record
                 recordTextview.setText(String.valueOf(classic_record));
 
@@ -401,6 +443,8 @@ public class ActivityLaunch extends AppCompatActivity {
                 if (scoreDestijl != 0) {
                     highscoreTextview.setText(String.valueOf(scoreDestijl));
                 }
+
+                levelName.setText("De Stijl");
 
                 // Set record
                 recordTextview.setText(String.valueOf(de_stijl_record));
@@ -459,6 +503,8 @@ public class ActivityLaunch extends AppCompatActivity {
                 }
                 // Set record
                 recordTextview.setText(String.valueOf(pi_record));
+
+                levelName.setText("Pi Time");
 
 
                 // TODO: make pi resource
