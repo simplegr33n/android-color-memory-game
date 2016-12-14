@@ -71,6 +71,8 @@ public class ActivityLaunch extends AppCompatActivity {
     private Integer de_stijl_record;
     private Integer pi_record;
 
+    private boolean repeatUgly = true;
+
 
     private int unlockedLevels;
 
@@ -145,10 +147,6 @@ public class ActivityLaunch extends AppCompatActivity {
         rightLocked = (ImageView) findViewById(R.id.right_locked);
         leftLocked = (ImageView) findViewById(R.id.left_locked);
 
-
-        // get world records
-        getRecords();
-
         // set Get values, set views, and set small icons
         getValues();
 
@@ -158,6 +156,7 @@ public class ActivityLaunch extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
 
         getValues();
 
@@ -177,6 +176,18 @@ public class ActivityLaunch extends AppCompatActivity {
         classic_record = sharedPref.getInt("classic_record", 0);
         de_stijl_record = sharedPref.getInt("de_stijl_record", 0);
         pi_record = sharedPref.getInt("pi_record", 0);
+
+        if (scoreClassic > classic_record) {
+            classic_record = scoreClassic;
+        }
+
+        if (scoreDestijl > de_stijl_record) {
+            de_stijl_record = scoreDestijl;
+        }
+
+        if (scorePi > pi_record) {
+            pi_record = scorePi;
+        }
 
         // set high score to high score views if not 0
         if (scoreClassic != 0) {
@@ -229,14 +240,15 @@ public class ActivityLaunch extends AppCompatActivity {
                                               classic_record = dataSnapshot.getValue(Integer.class);
 
                                               SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("classic_record", 0);
+                                              editor.putInt("classic_record", classic_record);
                                               editor.apply();
+
 
                                               //Set current world record
                                               if (scoreClassic != 0 && classic_record == null || scoreClassic > Integer.valueOf(classic_record)) {
                                                   mHighscoreDatabaseReference.child("classic").setValue(scoreClassic);
+                                                  getValues();
                                               }
-                                              recordTextview.setText(String.valueOf(classic_record));
                                           }
 
                                           @Override
@@ -254,14 +266,14 @@ public class ActivityLaunch extends AppCompatActivity {
                                               de_stijl_record = dataSnapshot.getValue(Integer.class);
 
                                               SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("de_stijl_record", 0);
+                                              editor.putInt("de_stijl_record", de_stijl_record);
                                               editor.apply();
 
                                               //Set current world record
                                               if (scoreDestijl != 0 && de_stijl_record == null || scoreDestijl > Integer.valueOf(de_stijl_record)) {
                                                   mHighscoreDatabaseReference.child("de_stijl").setValue(scoreDestijl);
+                                                  getValues();
                                               }
-                                              recordTextview.setText(String.valueOf(de_stijl_record));
                                           }
 
                                           @Override
@@ -279,14 +291,14 @@ public class ActivityLaunch extends AppCompatActivity {
                                               pi_record = dataSnapshot.getValue(Integer.class);
 
                                               SharedPreferences.Editor editor = sharedPref.edit();
-                                              editor.putInt("pi_record", 0);
+                                              editor.putInt("pi_record", pi_record);
                                               editor.apply();
 
                                               //Set current world record
                                               if (scorePi != 0 && pi_record == null || scorePi > Integer.valueOf(pi_record)) {
                                                   mHighscoreDatabaseReference.child("pi").setValue(scorePi);
+                                                  getValues();
                                               }
-                                              recordTextview.setText(String.valueOf(pi_record));
                                           }
 
                                           @Override

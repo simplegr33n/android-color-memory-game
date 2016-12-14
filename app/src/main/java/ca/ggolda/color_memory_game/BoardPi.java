@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
 
 
 public class BoardPi extends AppCompatActivity {
@@ -35,6 +37,8 @@ public class BoardPi extends AppCompatActivity {
     private TextView fullGuess;
 
     private TextView calculateTextview;
+
+    private TextView timeleftTextview;
 
     private TextView messageTextview;
     private TextView scoreTextview;
@@ -69,6 +73,8 @@ public class BoardPi extends AppCompatActivity {
         button0 = (TextView) findViewById(R.id.zero_button);
         buttonDot = (TextView) findViewById(R.id.dot_button);
 
+        timeleftTextview = (TextView) findViewById(R.id.time_left);
+
         fullGuess = (TextView) findViewById(R.id.fullguess);
 
         // get current high score and sleeptime from shared preferences
@@ -78,6 +84,10 @@ public class BoardPi extends AppCompatActivity {
 
         messageTextview = (TextView) findViewById(R.id.message);
         scoreTextview = (TextView) findViewById(R.id.score);
+        scoreTextview.setTextSize(64);
+        scoreTextview.setText("You will have\n10 seconds\nonce you\nstart typing");
+
+
         calculateTextview = (TextView) findViewById(R.id.calculate_textview);
 
         piInfo = (RelativeLayout) findViewById(R.id.pi_info);
@@ -91,6 +101,8 @@ public class BoardPi extends AppCompatActivity {
         breakLayout.setVisibility(View.VISIBLE);
         breakLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //return tetsize to normal for score field
+                scoreTextview.setTextSize(164);
                 guessPlay();
             }
         });
@@ -105,8 +117,53 @@ public class BoardPi extends AppCompatActivity {
         if (press.equals(String.valueOf(mPi.charAt(guessList.length())))) {
 
             guessList = guessList + press;
-
             calculateTextview.setText(guessList);
+
+            if (guessList.length() == 1) {
+                new CountDownTimer(10000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timeleftTextview.setText("seconds remaining: " + millisUntilFinished / 1000);
+                    }
+
+                    public void onFinish() {
+                        timeleftTextview.setText("");
+
+                        //Disable buttons while break menu up
+                        disableButtons();
+
+                        String nextDigit = String.valueOf(mPi.charAt(guessList.length()));
+
+                        messageTextview.setTextColor(Color.parseColor("#FF0000"));
+                        messageTextview.setText("Next Digit: " + nextDigit );
+
+                        scoreTextview.setTextColor(Color.parseColor("#FFFFFF"));
+                        scoreTextview.setText(String.valueOf(userScore));
+
+                        fullGuess.setText(guessList);
+
+                        piInfo.setVisibility(View.VISIBLE);
+
+                        highscoreTextview = (TextView) findViewById(R.id.highscore);
+                        if (highScore != 0) {
+                            highscoreTextview.setText("High Score: " + String.valueOf(highScore));
+                        }
+
+                        breakLayout.setVisibility(View.VISIBLE);
+                        breakLayout.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                guessList = "";
+                                calculateTextview.setText("");
+                                guessPlay();
+
+                            }
+                        });
+                    }
+                }.start();
+
+            }
+
+
 
             scoreTextview.setTextColor(Color.parseColor("#FFFFFF"));
 
@@ -122,6 +179,8 @@ public class BoardPi extends AppCompatActivity {
             }
 
         } else {
+            timeleftTextview.setText("");
+
             //Disable buttons while break menu up
             disableButtons();
 
