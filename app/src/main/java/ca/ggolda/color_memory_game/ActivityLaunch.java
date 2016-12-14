@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,15 +12,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * Created by gcgol on 12/08/2016.
  */
 
 public class ActivityLaunch extends AppCompatActivity {
 
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mHighscoreDatabaseReference;
+
     SharedPreferences sharedPref;
 
     private TextView highscoreTextview;
+    private TextView recordTextview;
 
     private RelativeLayout centerButton;
     private LinearLayout swipeView;
@@ -56,6 +67,10 @@ public class ActivityLaunch extends AppCompatActivity {
     private ImageView sixLocked;
     private ImageView sevenLocked;
 
+    private Integer classic_record;
+    private Integer de_stijl_record;
+    private Integer pi_record;
+
 
     private int unlockedLevels;
 
@@ -68,9 +83,14 @@ public class ActivityLaunch extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
+        // Get user highscore
         highscoreTextview = (TextView) findViewById(R.id.highscore);
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
 
+        //get world records
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mHighscoreDatabaseReference = mFirebaseDatabase.getReference().child("highscore");
+        recordTextview = (TextView) findViewById(R.id.record);
 
         centerButton = (RelativeLayout) findViewById(R.id.center_button);
         swipeView = (LinearLayout) findViewById(R.id.swipeview);
@@ -126,6 +146,9 @@ public class ActivityLaunch extends AppCompatActivity {
         leftLocked = (ImageView) findViewById(R.id.left_locked);
 
 
+        // get world records
+        getRecords();
+
         // set Get values, set views, and set small icons
         getValues();
 
@@ -150,6 +173,11 @@ public class ActivityLaunch extends AppCompatActivity {
         scoreClassic = sharedPref.getInt("highscore_classic", 0);
         scoreDestijl = sharedPref.getInt("highscore_destijl", 0);
         scorePi = sharedPref.getInt("highscore_pi", 0);
+
+        classic_record = sharedPref.getInt("classic_record", 0);
+        de_stijl_record = sharedPref.getInt("de_stijl_record", 0);
+        pi_record = sharedPref.getInt("pi_record", 0);
+
         // set high score to high score views if not 0
         if (scoreClassic != 0) {
             highscoreTextview.setText(String.valueOf(scoreClassic));
@@ -187,8 +215,87 @@ public class ActivityLaunch extends AppCompatActivity {
 
         // Set Small Buttons and Views after getting values
         setSmalls();
+        getRecords();
         setViews(lastPlay);
 
+    }
+
+    // get world records
+    private void getRecords() {
+        mHighscoreDatabaseReference.child("classic").
+                addValueEventListener(new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(DataSnapshot dataSnapshot) {
+                                              classic_record = dataSnapshot.getValue(Integer.class);
+
+                                              SharedPreferences.Editor editor = sharedPref.edit();
+                                              editor.putInt("classic_record", 0);
+                                              editor.apply();
+
+                                              //Set current world record
+                                              if (scoreClassic != 0 && classic_record == null || scoreClassic > Integer.valueOf(classic_record)) {
+                                                  mHighscoreDatabaseReference.child("classic").setValue(scoreClassic);
+                                              }
+                                              recordTextview.setText(String.valueOf(classic_record));
+                                          }
+
+                                          @Override
+                                          public void onCancelled(DatabaseError databaseError) {
+                                              System.out.println("The read failed: " + databaseError.getCode());
+                                          }
+                                      }
+
+                );
+
+        mHighscoreDatabaseReference.child("de_stijl").
+                addValueEventListener(new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(DataSnapshot dataSnapshot) {
+                                              de_stijl_record = dataSnapshot.getValue(Integer.class);
+
+                                              SharedPreferences.Editor editor = sharedPref.edit();
+                                              editor.putInt("de_stijl_record", 0);
+                                              editor.apply();
+
+                                              //Set current world record
+                                              if (scoreDestijl != 0 && de_stijl_record == null || scoreDestijl > Integer.valueOf(de_stijl_record)) {
+                                                  mHighscoreDatabaseReference.child("de_stijl").setValue(scoreDestijl);
+                                              }
+                                              recordTextview.setText(String.valueOf(de_stijl_record));
+                                          }
+
+                                          @Override
+                                          public void onCancelled(DatabaseError databaseError) {
+                                              System.out.println("The read failed: " + databaseError.getCode());
+                                          }
+                                      }
+
+                );
+
+        mHighscoreDatabaseReference.child("pi").
+                addValueEventListener(new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(DataSnapshot dataSnapshot) {
+                                              pi_record = dataSnapshot.getValue(Integer.class);
+
+                                              SharedPreferences.Editor editor = sharedPref.edit();
+                                              editor.putInt("pi_record", 0);
+                                              editor.apply();
+
+                                              //Set current world record
+                                              if (scorePi != 0 && pi_record == null || scorePi > Integer.valueOf(pi_record)) {
+                                                  mHighscoreDatabaseReference.child("pi").setValue(scorePi);
+                                              }
+                                              recordTextview.setText(String.valueOf(pi_record));
+                                          }
+
+                                          @Override
+                                          public void onCancelled(DatabaseError databaseError) {
+                                              System.out.println("The read failed: " + databaseError.getCode());
+                                          }
+                                      }
+
+                );
     }
 
 
@@ -227,6 +334,9 @@ public class ActivityLaunch extends AppCompatActivity {
                     highscoreTextview.setText(String.valueOf(scoreClassic));
                 }
 
+                // Set record
+                recordTextview.setText(String.valueOf(classic_record));
+
                 leftLocked.setVisibility(View.GONE);
 
                 centerLocked.setVisibility(View.GONE);
@@ -261,11 +371,14 @@ public class ActivityLaunch extends AppCompatActivity {
                 break;
             case 2:
 
-                // set highscore to scoreClassic
+                // set highscore to scoreDestijl
                 highscoreTextview.setText("");
                 if (scoreDestijl != 0) {
                     highscoreTextview.setText(String.valueOf(scoreDestijl));
                 }
+
+                // Set record
+                recordTextview.setText(String.valueOf(de_stijl_record));
 
                 leftLocked.setVisibility(View.GONE);
 
@@ -314,11 +427,13 @@ public class ActivityLaunch extends AppCompatActivity {
                 break;
             case 3:
 
-                // set highscore to scoreClassic
+                // set highscore to scorePi
                 highscoreTextview.setText("");
                 if (scorePi != 0) {
                     highscoreTextview.setText(String.valueOf(scorePi));
                 }
+                // Set record
+                recordTextview.setText(String.valueOf(pi_record));
 
 
                 // TODO: make pi resource

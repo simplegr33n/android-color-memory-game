@@ -77,6 +77,8 @@ public class BoardClassic extends AppCompatActivity {
 
     private MediaPlayer mp;
 
+    private boolean sound_on;
+
     // create audio focus change listener
     final AudioManager.OnAudioFocusChangeListener afChangeListener =
             new AudioManager.OnAudioFocusChangeListener() {
@@ -117,6 +119,7 @@ public class BoardClassic extends AppCompatActivity {
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
         highScore = sharedPref.getInt("highscore_classic", 0);
         sleepTime = sharedPref.getInt("sleep_time", 850);
+        sound_on = sharedPref.getBoolean("sound_on", false);
 
         patternString = (TextView) findViewById(R.id.pattern_textview);
         currentSquare = (TextView) findViewById(R.id.current_textview);
@@ -146,9 +149,6 @@ public class BoardClassic extends AppCompatActivity {
         patternString.setText(PatternString);
 
 
-
-
-
         //Display pattern to user
         breakLayout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -156,8 +156,6 @@ public class BoardClassic extends AppCompatActivity {
             }
         });
     }
-
-
 
 
     public void startPattern() {
@@ -320,23 +318,13 @@ public class BoardClassic extends AppCompatActivity {
                     redButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
-
-                    // Play sound on press
-                    // TODO: REFACTOR
-                    // TODO: remove lag
-                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    releaseAudio();
-                    // Request audio focus for playback
-                    int result = am.requestAudioFocus(afChangeListener,
-                            // Use the music stream.
-                            AudioManager.STREAM_MUSIC,
-                            // Request permanent focus.
-                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
+                    if (sound_on == true) {
+                        // Play sound on press
+                        // TODO: REFACTOR
+                        // TODO: remove lag
+                        releaseAudio();
                         // Start playback.
-                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note1);
+                        mp = MediaPlayer.create(BoardClassic.this, R.raw.note2);
                         mp.start();
 
                         //OnCompletionListener to release the audio file after playback
@@ -346,7 +334,6 @@ public class BoardClassic extends AppCompatActivity {
                                 releaseAudio();
                             }
                         });
-
                     }
 
 
@@ -374,20 +361,11 @@ public class BoardClassic extends AppCompatActivity {
                     greenButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
-                    // Play sound on press
-                    // TODO: REFACTOR
-                    // TODO: remove lag
-                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    releaseAudio();
-                    // Request audio focus for playback
-                    int result = am.requestAudioFocus(afChangeListener,
-                            // Use the music stream.
-                            AudioManager.STREAM_MUSIC,
-                            // Request permanent focus.
-                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
+                    if (sound_on == true) {
+                        // Play sound on press
+                        // TODO: REFACTOR
+                        // TODO: remove lag
+                        releaseAudio();
                         // Start playback.
                         mp = MediaPlayer.create(BoardClassic.this, R.raw.note2);
                         mp.start();
@@ -399,8 +377,8 @@ public class BoardClassic extends AppCompatActivity {
                                 releaseAudio();
                             }
                         });
-
                     }
+
 
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)
@@ -427,20 +405,11 @@ public class BoardClassic extends AppCompatActivity {
                     blueButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
-                    // Play sound on press
-                    // TODO: REFACTOR
-                    // TODO: remove lag
-                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    releaseAudio();
-                    // Request audio focus for playback
-                    int result = am.requestAudioFocus(afChangeListener,
-                            // Use the music stream.
-                            AudioManager.STREAM_MUSIC,
-                            // Request permanent focus.
-                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
+                    if (sound_on == true) {
+                        // Play sound on press
+                        // TODO: REFACTOR
+                        // TODO: remove lag
+                        releaseAudio();
                         // Start playback.
                         mp = MediaPlayer.create(BoardClassic.this, R.raw.note3);
                         mp.start();
@@ -452,7 +421,6 @@ public class BoardClassic extends AppCompatActivity {
                                 releaseAudio();
                             }
                         });
-
                     }
 
 
@@ -482,20 +450,11 @@ public class BoardClassic extends AppCompatActivity {
                     yellowButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
 
-                    // Play sound on press
-                    // TODO: REFACTOR
-                    // TODO: remove lag
-                    AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                    releaseAudio();
-                    // Request audio focus for playback
-                    int result = am.requestAudioFocus(afChangeListener,
-                            // Use the music stream.
-                            AudioManager.STREAM_MUSIC,
-                            // Request permanent focus.
-                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-                    if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-
+                    if (sound_on == true) {
+                        // Play sound on press
+                        // TODO: REFACTOR
+                        // TODO: remove lag
+                        releaseAudio();
                         // Start playback.
                         mp = MediaPlayer.create(BoardClassic.this, R.raw.note4);
                         mp.start();
@@ -507,9 +466,7 @@ public class BoardClassic extends AppCompatActivity {
                                 releaseAudio();
                             }
                         });
-
                     }
-
 
 
                 } else if (event.getAction() == MotionEvent.ACTION_UP && event.getAction() != MotionEvent.ACTION_CANCEL)// && flag==true)

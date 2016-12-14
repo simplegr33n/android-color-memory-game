@@ -193,7 +193,6 @@
                 android:id="@+id/textView2" />
 
             <TextView
-                android:layout_marginTop="6dp"
                 android:id="@+id/highscore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -316,6 +315,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -342,6 +342,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -366,6 +367,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -394,6 +396,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_margin="1dp"
             android:layout_width="0dp"
             android:layout_weight="1"
