@@ -94,6 +94,8 @@ public class ActivityLaunch extends AppCompatActivity {
         mHighscoreDatabaseReference = mFirebaseDatabase.getReference().child("highscore");
         recordTextview = (TextView) findViewById(R.id.record);
 
+
+
         centerButton = (RelativeLayout) findViewById(R.id.center_button);
         swipeView = (LinearLayout) findViewById(R.id.swipeview);
 
@@ -150,13 +152,19 @@ public class ActivityLaunch extends AppCompatActivity {
         // set Get values, set views, and set small icons
         getValues();
 
+
+
+        // get records and values again..
+        // TODO: find better way of setting views properly the first time
+        getRecords();
+        getValues();
+
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
 
         getValues();
 
@@ -226,7 +234,6 @@ public class ActivityLaunch extends AppCompatActivity {
 
         // Set Small Buttons and Views after getting values
         setSmalls();
-        getRecords();
         setViews(lastPlay);
 
     }
@@ -242,6 +249,8 @@ public class ActivityLaunch extends AppCompatActivity {
                                               SharedPreferences.Editor editor = sharedPref.edit();
                                               editor.putInt("classic_record", classic_record);
                                               editor.apply();
+
+                                              getValues();
 
 
                                               //Set current world record
@@ -269,6 +278,8 @@ public class ActivityLaunch extends AppCompatActivity {
                                               editor.putInt("de_stijl_record", de_stijl_record);
                                               editor.apply();
 
+                                              getValues();
+
                                               //Set current world record
                                               if (scoreDestijl != 0 && de_stijl_record == null || scoreDestijl > Integer.valueOf(de_stijl_record)) {
                                                   mHighscoreDatabaseReference.child("de_stijl").setValue(scoreDestijl);
@@ -293,6 +304,8 @@ public class ActivityLaunch extends AppCompatActivity {
                                               SharedPreferences.Editor editor = sharedPref.edit();
                                               editor.putInt("pi_record", pi_record);
                                               editor.apply();
+
+                                              getValues();
 
                                               //Set current world record
                                               if (scorePi != 0 && pi_record == null || scorePi > Integer.valueOf(pi_record)) {

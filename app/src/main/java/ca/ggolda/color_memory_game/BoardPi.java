@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 
 public class BoardPi extends AppCompatActivity {
