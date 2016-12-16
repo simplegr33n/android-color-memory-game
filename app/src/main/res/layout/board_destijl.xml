@@ -292,7 +292,7 @@ Color Buttons -->
                 android:id="@+id/highscore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#d249fe72"
+                android:textColor="#d23de262"
                 android:textSize="24dp"
                 android:textStyle="bold"
                 tools:text="High Score: 1"

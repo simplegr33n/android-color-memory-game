@@ -137,10 +137,12 @@ public class BoardPi extends AppCompatActivity {
                     }
 
                     public void onFinish() {
-                        timeleftTextview.setText("");
+                        timeleftTextview.setText("seconds remaining: 0");
 
                         //Disable buttons while break menu up
                         disableButtons();
+                        breakLayout.setVisibility(View.VISIBLE);
+
 
                         String nextDigit = String.valueOf(mPi.charAt(guessList.length()));
 
@@ -158,7 +160,7 @@ public class BoardPi extends AppCompatActivity {
                             highscoreTextview.setText("High Score: " + String.valueOf(highScore));
                         }
 
-                        breakLayout.setVisibility(View.VISIBLE);
+
                         breakLayout.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 guessList = "";
@@ -192,7 +194,10 @@ public class BoardPi extends AppCompatActivity {
             timeleftTextview.setText("");
 
             //When to cancel the CountDownTimer
-            countDown.cancel();
+            if (countDown != null) {
+                countDown.cancel();
+            }
+
             timeleftTextview.setText("seconds remaining: 10");
 
             //Disable buttons while break menu up
