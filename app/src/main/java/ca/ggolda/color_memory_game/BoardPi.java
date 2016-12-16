@@ -33,8 +33,9 @@ public class BoardPi extends AppCompatActivity {
     private TextView button9;
     private TextView buttonDot;
 
-    private boolean isCanceled = false;
     private long timeRemaining = 0;
+
+    private CountDownTimer countDown;
 
     private TextView fullGuess;
 
@@ -127,17 +128,10 @@ public class BoardPi extends AppCompatActivity {
             calculateTextview.setText(guessList);
 
             if (guessList.length() == 1) {
-                new CountDownTimer(10000, 1000) {
+                countDown = new CountDownTimer(10000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
                         //do something in every tick
-                        if(isCanceled)
-                        {
-                            //If the user request to cancel or paused the
-                            //CountDownTimer we will cancel the current instance
-                            timeleftTextview.setText("seconds remaining: 10");
-                            cancel();
-                        }
 
                         timeleftTextview.setText("seconds remaining: " + millisUntilFinished / 1000);
                     }
@@ -198,7 +192,7 @@ public class BoardPi extends AppCompatActivity {
             timeleftTextview.setText("");
 
             //When to cancel the CountDownTimer
-            isCanceled = true;
+            countDown.cancel();
             timeleftTextview.setText("seconds remaining: 10");
 
             //Disable buttons while break menu up
@@ -236,7 +230,6 @@ public class BoardPi extends AppCompatActivity {
     }
 
     private void guessPlay() {
-        isCanceled = false;
         timeleftTextview.setText("seconds remaining: 10");
         breakLayout.setVisibility(View.GONE);
 

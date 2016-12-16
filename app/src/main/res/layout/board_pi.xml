@@ -362,7 +362,7 @@ So it is hidden behind the
 Color Buttons -->
 
     <LinearLayout
-        tools:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -402,7 +402,7 @@ Color Buttons -->
                 android:textSize="44dp"
                 android:textStyle="bold"
                 tools:text="Great Stuff!"
-                android:layout_below="@+id/score"
+                android:layout_above="@+id/score"
                 android:layout_centerHorizontal="true" />
 
             <TextView
@@ -412,7 +412,7 @@ Color Buttons -->
                 android:layout_width="match_parent"
                 android:padding="4dp"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/highscore"
+                android:layout_above="@id/message"
                 android:layout_marginLeft="44dp"
                 android:layout_marginRight="22dp"
                 tools:text="3.14596"
@@ -421,11 +421,11 @@ Color Buttons -->
 
             <TextView
                 android:id="@+id/boardname"
-                android:layout_above="@id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#cadd65cb"
                 android:text="Pi Time"
+                android:layout_alignParentBottom="true"
                 android:textSize="44dp"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true" />
@@ -449,6 +449,8 @@ Color Buttons -->
                 android:gravity="center"
                 android:textColor="#FFF"
                 android:textSize="164dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
                 android:textStyle="bold"
                 tools:text="1"
                 android:layout_above="@+id/adView"
