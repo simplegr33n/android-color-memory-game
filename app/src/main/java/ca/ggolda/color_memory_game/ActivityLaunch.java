@@ -3,8 +3,10 @@ package ca.ggolda.color_memory_game;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class ActivityLaunch extends AppCompatActivity {
+
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mHighscoreDatabaseReference;
@@ -165,6 +168,50 @@ public class ActivityLaunch extends AppCompatActivity {
 
     }
 
+    // Swipe functionality for lauch icons
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+
+                if (Math.abs(deltaX) > MIN_DISTANCE)
+                {
+                    // Left to Right swipe action
+                    if (x2 > x1)
+                    {
+                        if (lastPlay + 1 <= 3) {
+                            lastPlay = lastPlay + 1;
+                            setViews(lastPlay);
+                        }
+                    }
+
+                    // Right to left swipe action
+                    else
+                    {
+                        if (lastPlay - 1 >= 1) {
+                            lastPlay = lastPlay - 1;
+                            setViews(lastPlay);
+                        }
+                    }
+
+                }
+                else
+                {
+                    // consider as something else - a screen tap for example
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+
+    }
+
 
     @Override
     protected void onResume() {
@@ -236,8 +283,7 @@ public class ActivityLaunch extends AppCompatActivity {
         }
         unlockedLevels = sharedPref.getInt("unlocked_level", 1);
 
-        // Set Small Buttons and Views after getting values
-        setSmalls();
+        //Set views after getting all values
         setViews(lastPlay);
 
     }
@@ -391,6 +437,9 @@ public class ActivityLaunch extends AppCompatActivity {
 
     // Set views and locks
     private void setViews(int setView) {
+        // Set Small Buttons
+        setSmalls();
+
         switch (setView) {
             case 1:
                 // set highscore to scoreClassic
