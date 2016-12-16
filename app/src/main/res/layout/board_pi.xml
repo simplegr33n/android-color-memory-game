@@ -362,7 +362,7 @@
  Color Buttons -->
 
     <LinearLayout
-        tools:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -425,7 +425,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:layout_centerHorizontal="true"
-                android:background="#bdbdbd"
                 android:padding="8dp">
 
                 <TextView
@@ -433,8 +432,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:textColor="#0F00F0"
-                    android:text="Life of Pi"
+                    android:textColor="#28a558"
+                    android:text="Pi Time"
                     android:textSize="44dp"
                     android:textStyle="bold" />
 

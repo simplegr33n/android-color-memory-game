@@ -135,7 +135,7 @@ public class BoardClassic extends AppCompatActivity {
 
         highscoreTextview = (TextView) findViewById(R.id.highscore);
         if (highScore != 0) {
-            highscoreTextview.setText(String.valueOf(highScore));
+            highscoreTextview.setText("Highscore:"  + String.valueOf(highScore));
         }
 
 
@@ -258,7 +258,7 @@ public class BoardClassic extends AppCompatActivity {
             messageTextview.setText("Good\nJob!");
             messageTextview.setTextColor(Color.parseColor("#49ff89"));
             scoreTextview.setText(String.valueOf(userScore));
-            highscoreTextview.setText(String.valueOf(highScore));
+            highscoreTextview.setText("Highscore:"  + String.valueOf(highScore));
 
             breakLayout.setVisibility(View.VISIBLE);
             breakLayout.setOnClickListener(new View.OnClickListener() {

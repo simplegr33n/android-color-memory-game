@@ -102,7 +102,6 @@ public class ActivityLaunch extends AppCompatActivity {
         recordTextview = (TextView) findViewById(R.id.record);
 
 
-
         centerButton = (RelativeLayout) findViewById(R.id.center_button);
         swipeView = (LinearLayout) findViewById(R.id.swipeview);
 
@@ -160,7 +159,6 @@ public class ActivityLaunch extends AppCompatActivity {
         getValues();
 
 
-
         // get records and values again..
         // TODO: find better way of setting views properly the first time
         getRecords();
@@ -170,10 +168,9 @@ public class ActivityLaunch extends AppCompatActivity {
 
     // Swipe functionality for lauch icons
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
 
-        switch(event.getAction())
-        {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
                 break;
@@ -181,30 +178,67 @@ public class ActivityLaunch extends AppCompatActivity {
                 x2 = event.getX();
                 float deltaX = x2 - x1;
 
-                if (Math.abs(deltaX) > MIN_DISTANCE)
-                {
+                if (Math.abs(deltaX) > MIN_DISTANCE) {
                     // Left to Right swipe action
-                    if (x2 > x1)
-                    {
-                        if (lastPlay + 1 <= 3) {
-                            lastPlay = lastPlay + 1;
+                    if (x2 > x1) {
+                        if (lastPlay - 1 >= 1) {
+                            lastPlay = lastPlay - 1;
+                            setViews(lastPlay);
+                        } else {
+                            lastPlay = 3;
                             setViews(lastPlay);
                         }
                     }
 
                     // Right to left swipe action
-                    else
-                    {
-                        if (lastPlay - 1 >= 1) {
-                            lastPlay = lastPlay - 1;
+                    else if (x2 < x1) {
+
+                        if (lastPlay + 1 <= 3) {
+                            lastPlay = lastPlay + 1;
                             setViews(lastPlay);
+                        } else {
+                            lastPlay = 1;
+                            setViews(lastPlay);
+                        }
+                    } else {
+
+                    }
+
+                } else {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    // consider as something else - a screen tap for example
+                    if (deltaX == 0) {
+                        switch (lastPlay) {
+                            case 1:
+                                // Log as last_play
+                                editor.putInt("last_play", 1);
+                                editor.apply();
+
+                                Intent intent_classic = new Intent(ActivityLaunch.this, BoardClassic.class);
+                                startActivity(intent_classic);
+
+                                break;
+                            case 2:
+                                // Log as last_play
+                                editor.putInt("last_play", 2);
+                                editor.apply();
+
+                                Intent intent_destijl = new Intent(ActivityLaunch.this, BoardDeStijl.class);
+                                startActivity(intent_destijl);
+
+                                break;
+                            case 3:
+                                // Log as last_play
+                                editor.putInt("last_play", 3);
+                                editor.apply();
+
+                                Intent intent_pi = new Intent(ActivityLaunch.this, BoardPi.class);
+                                startActivity(intent_pi);
+
+                                break;
                         }
                     }
 
-                }
-                else
-                {
-                    // consider as something else - a screen tap for example
                 }
                 break;
         }
@@ -453,11 +487,21 @@ public class ActivityLaunch extends AppCompatActivity {
                 // Set record
                 recordTextview.setText(String.valueOf(classic_record));
 
-                leftLocked.setVisibility(View.GONE);
+                leftImageview.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setViews(3);
+                    }
+                });
+
+                if (unlockedLevels >= 3) {
+                    leftLocked.setVisibility(View.GONE);
+                } else {
+                    leftLocked.setVisibility(View.VISIBLE);
+                }
 
                 centerLocked.setVisibility(View.GONE);
                 centerImageview.setImageResource(R.drawable.board_classic);
-                leftImageview.setImageResource(R.drawable.rectangle);
+                leftImageview.setImageResource(R.drawable.board_pi);
                 rightImageview.setImageResource(R.drawable.board_destijl);
 
                 centerButton.setOnClickListener(new View.OnClickListener() {
@@ -466,7 +510,6 @@ public class ActivityLaunch extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt("last_play", 1);
                         editor.apply();
-
                         Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
                         startActivity(intent);
                     }
@@ -559,7 +602,16 @@ public class ActivityLaunch extends AppCompatActivity {
                 // TODO: make pi resource
                 centerImageview.setImageResource(R.drawable.board_pi);
                 leftImageview.setImageResource(R.drawable.board_destijl);
-                rightImageview.setImageResource(R.drawable.rectangle);
+                rightImageview.setImageResource(R.drawable.board_classic);
+                rightLocked.setVisibility(View.GONE);
+
+
+                rightImageview.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        setViews(1);
+                    }
+                });
+
 
                 leftImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -595,10 +647,12 @@ public class ActivityLaunch extends AppCompatActivity {
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
+
                 if (unlockedLevels >= 4) {
                     rightLocked.setVisibility(View.GONE);
                 } else {
-                    rightLocked.setVisibility(View.VISIBLE);
+                    // until we have a level four
+                    rightLocked.setVisibility(View.GONE);
                 }
 
 

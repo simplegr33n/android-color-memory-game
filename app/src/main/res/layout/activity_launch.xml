@@ -52,39 +52,48 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:paddingLeft="-70dp">
+            android:paddingLeft="-100dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
 
             <RelativeLayout
                 android:id="@+id/position_left"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/left_imageview"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:alpha=".35"
-                    android:src="@drawable/rectangle" />
+                    android:scaleType="fitXY"
+                    android:alpha=".25"
+                    android:src="@drawable/board_destijl" />
 
                 <ImageView
                     android:id="@+id/left_locked"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:alpha=".45"
+                    android:scaleType="fitXY"
                     android:src="@drawable/locked" />
 
 
-
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
 
 
         </LinearLayout>
@@ -95,9 +104,11 @@
             android:layout_weight="5"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="16dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:layout_marginRight="34dp"
+            android:layout_marginLeft="34dp">
 
             <RelativeLayout
                 android:id="@+id/center_button"
@@ -113,7 +124,9 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:background="?android:attr/selectableItemBackground" />
+                    android:background="?android:attr/selectableItemBackground"
+                    android:id="@+id/textView3" />
+
 
 
                 <ImageView
@@ -123,8 +136,8 @@
                     android:layout_gravity="center"
                     android:src="@drawable/board_classic"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_toRightOf="@+id/textView3"
+                    android:layout_toEndOf="@+id/textView3" />
 
                 <ImageView
                     android:id="@+id/center_locked"
@@ -136,7 +149,7 @@
                     android:layout_gravity="center"
                     android:alpha=".75"
                     android:src="@drawable/locked"
-                    tools:visibility="gone" />
+                    tools:visibility="visible" />
 
 
             </RelativeLayout>
@@ -147,38 +160,52 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:paddingRight="-70dp">
+            android:paddingRight="-100dp">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
 
             <RelativeLayout
+                android:layout_weight="1"
                 android:id="@+id/position_right"
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
                 android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/right_imageview"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:scaleType="fitXY"
                     android:alpha=".25"
                     android:src="@drawable/board_destijl" />
 
                 <ImageView
                     android:id="@+id/right_locked"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:alpha=".45"
                     android:src="@drawable/locked"
+                    android:scaleType="fitXY"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
 
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
 
 
         </LinearLayout>
