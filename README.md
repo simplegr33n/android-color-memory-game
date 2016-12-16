@@ -12,9 +12,9 @@ https://play.google.com/store/apps/details?id=ca.ggolda.color_memory_game
 <img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone21.jpg" width="192">
 <img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone83.jpg" width="192">
 
-## Version Notes
-
 <hr>
+
+## Version Notes
 
 #### Version 1.02
 * added swiping to launch screen
