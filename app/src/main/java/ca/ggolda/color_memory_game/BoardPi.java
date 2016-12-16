@@ -33,6 +33,9 @@ public class BoardPi extends AppCompatActivity {
     private TextView button9;
     private TextView buttonDot;
 
+    private boolean isCanceled = false;
+    private long timeRemaining = 0;
+
     private TextView fullGuess;
 
     private TextView calculateTextview;
@@ -53,10 +56,13 @@ public class BoardPi extends AppCompatActivity {
     private int userScore = 0;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.board_pi);
+
 
         breakLayout = (RelativeLayout) findViewById(R.id.BreakLayout);
 
@@ -73,6 +79,9 @@ public class BoardPi extends AppCompatActivity {
         buttonDot = (TextView) findViewById(R.id.dot_button);
 
         timeleftTextview = (TextView) findViewById(R.id.time_left);
+        timeleftTextview.setText("seconds remaining: 10");
+
+
 
         fullGuess = (TextView) findViewById(R.id.fullguess);
 
@@ -89,8 +98,7 @@ public class BoardPi extends AppCompatActivity {
 
         calculateTextview = (TextView) findViewById(R.id.calculate_textview);
 
-        piInfo = (RelativeLayout) findViewById(R.id.pi_info);
-        piInfo.setVisibility(View.GONE);
+        messageTextview.setVisibility(View.GONE);
 
         highscoreTextview = (TextView) findViewById(R.id.highscore);
         if (highScore != 0) {
@@ -122,6 +130,15 @@ public class BoardPi extends AppCompatActivity {
                 new CountDownTimer(10000, 1000) {
 
                     public void onTick(long millisUntilFinished) {
+                        //do something in every tick
+                        if(isCanceled)
+                        {
+                            //If the user request to cancel or paused the
+                            //CountDownTimer we will cancel the current instance
+                            timeleftTextview.setText("seconds remaining: 10");
+                            cancel();
+                        }
+
                         timeleftTextview.setText("seconds remaining: " + millisUntilFinished / 1000);
                     }
 
@@ -141,7 +158,6 @@ public class BoardPi extends AppCompatActivity {
 
                         fullGuess.setText(guessList);
 
-                        piInfo.setVisibility(View.VISIBLE);
 
                         highscoreTextview = (TextView) findViewById(R.id.highscore);
                         if (highScore != 0) {
@@ -153,6 +169,7 @@ public class BoardPi extends AppCompatActivity {
                             public void onClick(View v) {
                                 guessList = "";
                                 calculateTextview.setText("");
+                                timeleftTextview.setText("seconds remaining: 10");
                                 guessPlay();
 
                             }
@@ -180,6 +197,10 @@ public class BoardPi extends AppCompatActivity {
         } else {
             timeleftTextview.setText("");
 
+            //When to cancel the CountDownTimer
+            isCanceled = true;
+            timeleftTextview.setText("seconds remaining: 10");
+
             //Disable buttons while break menu up
             disableButtons();
 
@@ -193,7 +214,7 @@ public class BoardPi extends AppCompatActivity {
 
             fullGuess.setText(guessList);
 
-            piInfo.setVisibility(View.VISIBLE);
+
 
             highscoreTextview = (TextView) findViewById(R.id.highscore);
             if (highScore != 0) {
@@ -215,7 +236,10 @@ public class BoardPi extends AppCompatActivity {
     }
 
     private void guessPlay() {
+        isCanceled = false;
+        timeleftTextview.setText("seconds remaining: 10");
         breakLayout.setVisibility(View.GONE);
+
 
         button1.setOnTouchListener(new View.OnTouchListener() {
             @Override

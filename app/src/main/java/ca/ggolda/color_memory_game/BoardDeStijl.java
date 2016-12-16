@@ -140,7 +140,7 @@ public class BoardDeStijl extends AppCompatActivity {
         scoreTextview.setText("GO");
         highscoreTextview = (TextView) findViewById(R.id.highscore);
         if (highScore != 0) {
-            highscoreTextview.setText("Highscore:"  + String.valueOf(highScore));
+            highscoreTextview.setText("Highscore: "  + String.valueOf(highScore));
         }
 
         patternList = new ArrayList<Integer>();
@@ -308,7 +308,7 @@ public class BoardDeStijl extends AppCompatActivity {
             messageTextview.setText("Great!");
             messageTextview.setTextColor(Color.parseColor("#e0ff8c"));
             scoreTextview.setText(String.valueOf(userScore));
-            highscoreTextview.setText("Highscore:"  + String.valueOf(highScore));
+            highscoreTextview.setText("Highscore: "  + String.valueOf(highScore));
 
             breakLayout.setVisibility(View.VISIBLE);
             breakLayout.setOnClickListener(new View.OnClickListener() {

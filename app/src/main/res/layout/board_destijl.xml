@@ -236,10 +236,10 @@ Color Buttons -->
         tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:id="@+id/BreakLayout"
@@ -275,6 +275,7 @@ Color Buttons -->
                 tools:text="Great Stuff!"
                 android:layout_below="@+id/score"
                 android:layout_centerHorizontal="true" />
+
 
             <TextView
                 android:id="@+id/boardname"
