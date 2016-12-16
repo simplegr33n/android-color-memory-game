@@ -22,9 +22,11 @@ https://play.google.com/store/apps/details?id=ca.ggolda.color_memory_game
 * added Life of Pi mode!
 * improved launch screen
 * changed version naming convention
+
 #### Version 1.5
 * fixed highscore recording
 * improved launch page
+
 #### Version 1.4
 * changed button animation
 * made break screen prettier
