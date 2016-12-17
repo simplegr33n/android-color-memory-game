@@ -4,16 +4,15 @@ Check it out on the Google Play store here:
 https://play.google.com/store/apps/details?id=ca.ggolda.color_memory_game
 
 <hr>
-
 ## Screenshots
 
-<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone98.jpg" width="192">
-<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone12.jpg" width="192">
-<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone21.jpg" width="192">
-<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone83.jpg" width="192">
+<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone98.jpg" width="144">
+<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone12.jpg" width="144">
+<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone91.jpg" width="144">
+<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone21.jpg" width="144">
+<img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/phone83.jpg" width="144">
 
 <hr>
-
 ## Version Notes
 
 #### Version 1.02
