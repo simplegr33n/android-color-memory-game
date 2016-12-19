@@ -3,16 +3,13 @@ package ca.ggolda.color_memory_game;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,9 +34,6 @@ public class ActivityLaunch extends AppCompatActivity {
     private TextView levelName;
 
 
-    private RelativeLayout centerButton;
-    private LinearLayout swipeView;
-
     private ImageView centerImageview;
     private ImageView leftImageview;
     private ImageView rightImageview;
@@ -49,9 +43,7 @@ public class ActivityLaunch extends AppCompatActivity {
     private ImageView leftLocked;
 
 
-    private int lastPlay;
-
-    private int currentView = 1;
+    private int centerPlay;
 
     private int scoreClassic = 0;
     private int scoreDestijl = 0;
@@ -60,24 +52,14 @@ public class ActivityLaunch extends AppCompatActivity {
     private ImageView levelOne;
     private ImageView levelTwo;
     private ImageView levelThree;
-    private ImageView levelFour;
-    private ImageView levelFive;
-    private ImageView levelSix;
-    private ImageView levelSeven;
 
     private ImageView twoLocked;
     private ImageView threeLocked;
-    private ImageView fourLocked;
-    private ImageView fiveLocked;
-    private ImageView sixLocked;
-    private ImageView sevenLocked;
+
 
     private Integer classic_record;
     private Integer de_stijl_record;
     private Integer pi_record;
-
-    private boolean repeatUgly = true;
-
 
     private int unlockedLevels;
 
@@ -100,10 +82,7 @@ public class ActivityLaunch extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mHighscoreDatabaseReference = mFirebaseDatabase.getReference().child("highscore");
         recordTextview = (TextView) findViewById(R.id.record);
-
-
-        centerButton = (RelativeLayout) findViewById(R.id.center_button);
-        swipeView = (LinearLayout) findViewById(R.id.swipeview);
+        
 
         ImageView settingsButton = (ImageView) findViewById(R.id.settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -123,18 +102,21 @@ public class ActivityLaunch extends AppCompatActivity {
 
         levelOne.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                centerPlay = 1;
                 setViews(1);
             }
         });
 
         levelTwo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                centerPlay = 2;
                 setViews(2);
             }
         });
 
         levelThree.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                centerPlay = 3;
                 setViews(3);
             }
         });
@@ -142,10 +124,6 @@ public class ActivityLaunch extends AppCompatActivity {
 
         twoLocked = (ImageView) findViewById(R.id.two_locked);
         threeLocked = (ImageView) findViewById(R.id.three_locked);
-        fourLocked = (ImageView) findViewById(R.id.four_locked);
-        fiveLocked = (ImageView) findViewById(R.id.five_locked);
-        sixLocked = (ImageView) findViewById(R.id.six_locked);
-        sevenLocked = (ImageView) findViewById(R.id.seven_locked);
 
         centerImageview = (ImageView) findViewById(R.id.center_icon);
         leftImageview = (ImageView) findViewById(R.id.left_imageview);
@@ -181,24 +159,24 @@ public class ActivityLaunch extends AppCompatActivity {
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        if (lastPlay - 1 >= 1) {
-                            lastPlay = lastPlay - 1;
-                            setViews(lastPlay);
+                        if (centerPlay - 1 >= 1) {
+                            centerPlay = centerPlay - 1;
+                            setViews(centerPlay);
                         } else {
-                            lastPlay = 3;
-                            setViews(lastPlay);
+                            centerPlay = 3;
+                            setViews(centerPlay);
                         }
                     }
 
                     // Right to left swipe action
                     else if (x2 < x1) {
 
-                        if (lastPlay + 1 <= 3) {
-                            lastPlay = lastPlay + 1;
-                            setViews(lastPlay);
+                        if (centerPlay + 1 <= 3) {
+                            centerPlay = centerPlay + 1;
+                            setViews(centerPlay);
                         } else {
-                            lastPlay = 1;
-                            setViews(lastPlay);
+                            centerPlay = 1;
+                            setViews(centerPlay);
                         }
                     } else {
 
@@ -210,7 +188,7 @@ public class ActivityLaunch extends AppCompatActivity {
                     if (deltaX == 0) {
 
 
-                        if (lastPlay == 1) {
+                        if (centerPlay == 1) {
                             // Log as last_play
                             editor.putInt("last_play", 1);
                             editor.apply();
@@ -220,7 +198,7 @@ public class ActivityLaunch extends AppCompatActivity {
                         }
 
                         // check if level 2 unlocked
-                        if (lastPlay == 2 && unlockedLevels >= 2) {
+                        if (centerPlay == 2 && unlockedLevels >= 2) {
                             // Log as last_play
                             editor.putInt("last_play", 2);
                             editor.apply();
@@ -229,7 +207,7 @@ public class ActivityLaunch extends AppCompatActivity {
                             startActivity(intent_destijl);
                         }
                         // check if level 3 unlocked
-                        if (lastPlay == 3 && unlockedLevels >= 3) {
+                        if (centerPlay == 3 && unlockedLevels >= 3) {
                             // Log as last_play
                             editor.putInt("last_play", 3);
                             editor.apply();
@@ -262,8 +240,8 @@ public class ActivityLaunch extends AppCompatActivity {
     private void getValues() {
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
 
-        // get lastPlay for int to give setView
-        lastPlay = sharedPref.getInt("last_play", 1);
+        // get centerPlay for int to give setView
+        centerPlay = sharedPref.getInt("last_play", 1);
 
         unlockedLevels = sharedPref.getInt("unlocked_level", 1);
 
@@ -313,17 +291,17 @@ public class ActivityLaunch extends AppCompatActivity {
         }
 
         // Set conditions for unlocking ?
-        if (scorePi >= 31 && unlockedLevels == 3) {
-            fourLocked.setVisibility(View.GONE);
-
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("unlocked_level", 4);
-            editor.apply();
-        }
-        unlockedLevels = sharedPref.getInt("unlocked_level", 1);
+//        if (scorePi >= 31 && unlockedLevels == 3) {
+//            fourLocked.setVisibility(View.GONE);
+//
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putInt("unlocked_level", 4);
+//            editor.apply();
+//        }
+//        unlockedLevels = sharedPref.getInt("unlocked_level", 1);
 
         //Set views after getting all values
-        setViews(lastPlay);
+        setViews(centerPlay);
 
     }
 
@@ -464,12 +442,6 @@ public class ActivityLaunch extends AppCompatActivity {
                 threeLocked.setVisibility(View.GONE);
 
                 break;
-            case 4:
-                twoLocked.setVisibility(View.GONE);
-                threeLocked.setVisibility(View.GONE);
-                fourLocked.setVisibility(View.GONE);
-
-                break;
 
         }
     }
@@ -492,11 +464,7 @@ public class ActivityLaunch extends AppCompatActivity {
                 // Set record
                 recordTextview.setText(String.valueOf(classic_record));
 
-                leftImageview.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        setViews(3);
-                    }
-                });
+
 
                 if (unlockedLevels >= 3) {
                     leftLocked.setVisibility(View.GONE);
@@ -509,19 +477,15 @@ public class ActivityLaunch extends AppCompatActivity {
                 leftImageview.setImageResource(R.drawable.board_pi);
                 rightImageview.setImageResource(R.drawable.board_destijl);
 
-//                centerButton.setOnClickListener(new View.OnClickListener() {
-//                    public void onClick(View v) {
-//                        // Log as last_play
-//                        SharedPreferences.Editor editor = sharedPref.edit();
-//                        editor.putInt("last_play", 1);
-//                        editor.apply();
-//                        Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
-//                        startActivity(intent);
-//                    }
-//                });
-
+                leftImageview.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        centerPlay = 3;
+                        setViews(3);
+                    }
+                });
                 rightImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        centerPlay = 2;
                         setViews(2);
                     }
                 });
@@ -554,12 +518,14 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 leftImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        centerPlay = 1;
                         setViews(1);
                     }
                 });
 
                 rightImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        centerPlay = 3;
                         setViews(3);
                     }
                 });
@@ -567,19 +533,7 @@ public class ActivityLaunch extends AppCompatActivity {
                 if (unlockedLevels >= 2) {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
-//                    centerButton.setOnClickListener(new View.OnClickListener() {
-//                        public void onClick(View v) {
-//                            // Log as last_play
-//                            SharedPreferences.Editor editor = sharedPref.edit();
-//                            editor.putInt("last_play", 2);
-//                            editor.apply();
-//
-//                            Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);
-//                            startActivity(intent);
-//                        }
-//                    });
                 } else {
-//                    centerButton.setOnClickListener(null);
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
@@ -613,6 +567,7 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 rightImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        centerPlay = 1;
                         setViews(1);
                     }
                 });
@@ -620,6 +575,7 @@ public class ActivityLaunch extends AppCompatActivity {
 
                 leftImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        centerPlay = 2;
                         setViews(2);
                     }
                 });
@@ -635,20 +591,8 @@ public class ActivityLaunch extends AppCompatActivity {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
-//                    centerButton.setOnClickListener(new View.OnClickListener() {
-//                        public void onClick(View v) {
-//                            // Log as last_play
-//                            SharedPreferences.Editor editor = sharedPref.edit();
-//                            editor.putInt("last_play", 3);
-//                            editor.apply();
-//
-//                            Intent intent = new Intent(ActivityLaunch.this, BoardPi.class);
-//                            startActivity(intent);
-//                        }
-//                    });
 
                 } else {
-//                    centerButton.setOnClickListener(null);
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
@@ -662,19 +606,6 @@ public class ActivityLaunch extends AppCompatActivity {
 
 
                 break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-
-                break;
-
 
         }
     }
