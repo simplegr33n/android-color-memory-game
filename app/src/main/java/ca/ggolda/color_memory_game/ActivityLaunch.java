@@ -270,7 +270,7 @@ public class ActivityLaunch extends AppCompatActivity {
 
         //TODO: conditions for unlocking
         // Set conditions for unlocking De Stijl
-        if (scoreClassic >= 5 && unlockedLevels == 1) {
+        if (scoreClassic >= 10 && unlockedLevels == 1) {
             twoLocked.setVisibility(View.GONE);
 
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -280,7 +280,7 @@ public class ActivityLaunch extends AppCompatActivity {
 
         // Set conditions for unlocking Pi
         // TODO: make the requirement a sum of 31
-        if (scoreDestijl + scoreClassic >= 10 && unlockedLevels == 2) {
+        if (scoreDestijl >= 10 && unlockedLevels == 2) {
             threeLocked.setVisibility(View.GONE);
 
             SharedPreferences.Editor editor = sharedPref.edit();
