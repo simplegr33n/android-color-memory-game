@@ -208,39 +208,43 @@ public class ActivityLaunch extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     // consider as something else - a screen tap for example
                     if (deltaX == 0) {
-                        switch (lastPlay) {
-                            case 1:
-                                // Log as last_play
-                                editor.putInt("last_play", 1);
-                                editor.apply();
 
-                                Intent intent_classic = new Intent(ActivityLaunch.this, BoardClassic.class);
-                                startActivity(intent_classic);
 
-                                break;
-                            case 2:
-                                // Log as last_play
-                                editor.putInt("last_play", 2);
-                                editor.apply();
+                        if (lastPlay == 1) {
+                            // Log as last_play
+                            editor.putInt("last_play", 1);
+                            editor.apply();
 
-                                Intent intent_destijl = new Intent(ActivityLaunch.this, BoardDeStijl.class);
-                                startActivity(intent_destijl);
-
-                                break;
-                            case 3:
-                                // Log as last_play
-                                editor.putInt("last_play", 3);
-                                editor.apply();
-
-                                Intent intent_pi = new Intent(ActivityLaunch.this, BoardPi.class);
-                                startActivity(intent_pi);
-
-                                break;
+                            Intent intent_classic = new Intent(ActivityLaunch.this, BoardClassic.class);
+                            startActivity(intent_classic);
                         }
-                    }
 
+                        // check if level 2 unlocked
+                        if (lastPlay == 2 && unlockedLevels >= 2) {
+                            // Log as last_play
+                            editor.putInt("last_play", 2);
+                            editor.apply();
+
+                            Intent intent_destijl = new Intent(ActivityLaunch.this, BoardDeStijl.class);
+                            startActivity(intent_destijl);
+                        }
+                        // check if level 3 unlocked
+                        if (lastPlay == 3 && unlockedLevels >= 3) {
+                            // Log as last_play
+                            editor.putInt("last_play", 3);
+                            editor.apply();
+
+                            Intent intent_pi = new Intent(ActivityLaunch.this, BoardPi.class);
+                            startActivity(intent_pi);
+                        }
+
+
+
+
+
+                    }
                 }
-                break;
+
         }
         return super.onTouchEvent(event);
 
@@ -258,6 +262,7 @@ public class ActivityLaunch extends AppCompatActivity {
     private void getValues() {
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
 
+        // get lastPlay for int to give setView
         lastPlay = sharedPref.getInt("last_play", 1);
 
         unlockedLevels = sharedPref.getInt("unlocked_level", 1);
@@ -504,16 +509,16 @@ public class ActivityLaunch extends AppCompatActivity {
                 leftImageview.setImageResource(R.drawable.board_pi);
                 rightImageview.setImageResource(R.drawable.board_destijl);
 
-                centerButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        // Log as last_play
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt("last_play", 1);
-                        editor.apply();
-                        Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
-                        startActivity(intent);
-                    }
-                });
+//                centerButton.setOnClickListener(new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        // Log as last_play
+//                        SharedPreferences.Editor editor = sharedPref.edit();
+//                        editor.putInt("last_play", 1);
+//                        editor.apply();
+//                        Intent intent = new Intent(ActivityLaunch.this, BoardClassic.class);
+//                        startActivity(intent);
+//                    }
+//                });
 
                 rightImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -562,19 +567,19 @@ public class ActivityLaunch extends AppCompatActivity {
                 if (unlockedLevels >= 2) {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
-                    centerButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            // Log as last_play
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putInt("last_play", 2);
-                            editor.apply();
-
-                            Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);
-                            startActivity(intent);
-                        }
-                    });
+//                    centerButton.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            // Log as last_play
+//                            SharedPreferences.Editor editor = sharedPref.edit();
+//                            editor.putInt("last_play", 2);
+//                            editor.apply();
+//
+//                            Intent intent = new Intent(ActivityLaunch.this, BoardDeStijl.class);
+//                            startActivity(intent);
+//                        }
+//                    });
                 } else {
-                    centerButton.setOnClickListener(null);
+//                    centerButton.setOnClickListener(null);
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
@@ -630,20 +635,20 @@ public class ActivityLaunch extends AppCompatActivity {
                     centerLocked.setVisibility(View.GONE);
                     twoLocked.setVisibility(View.GONE);
                     threeLocked.setVisibility(View.GONE);
-                    centerButton.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            // Log as last_play
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putInt("last_play", 3);
-                            editor.apply();
-
-                            Intent intent = new Intent(ActivityLaunch.this, BoardPi.class);
-                            startActivity(intent);
-                        }
-                    });
+//                    centerButton.setOnClickListener(new View.OnClickListener() {
+//                        public void onClick(View v) {
+//                            // Log as last_play
+//                            SharedPreferences.Editor editor = sharedPref.edit();
+//                            editor.putInt("last_play", 3);
+//                            editor.apply();
+//
+//                            Intent intent = new Intent(ActivityLaunch.this, BoardPi.class);
+//                            startActivity(intent);
+//                        }
+//                    });
 
                 } else {
-                    centerButton.setOnClickListener(null);
+//                    centerButton.setOnClickListener(null);
                     centerLocked.setVisibility(View.VISIBLE);
                 }
 
