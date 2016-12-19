@@ -85,6 +85,7 @@ public class BoardPi extends AppCompatActivity {
 
 
         fullGuess = (TextView) findViewById(R.id.fullguess);
+        fullGuess.setVisibility(View.GONE);
 
         // get current high score and sleeptime from shared preferences
         sharedPref = getSharedPreferences("ggco_colormem_values", MODE_PRIVATE);
@@ -92,14 +93,13 @@ public class BoardPi extends AppCompatActivity {
         sleepTime = sharedPref.getInt("sleep_time", 850);
 
         messageTextview = (TextView) findViewById(R.id.message);
-        scoreTextview = (TextView) findViewById(R.id.score);
-        scoreTextview.setTextSize(64);
-        scoreTextview.setText("You will have\n10 seconds\nonce you\nstart typing");
+        messageTextview.setTextSize(44);
+        messageTextview.setTextColor(Color.parseColor("#FFFFFF"));
+        messageTextview.setText("You will have 10 seconds once you start typing");
 
 
         calculateTextview = (TextView) findViewById(R.id.calculate_textview);
 
-        messageTextview.setVisibility(View.GONE);
 
         highscoreTextview = (TextView) findViewById(R.id.highscore);
         if (highScore != 0) {
@@ -152,6 +152,7 @@ public class BoardPi extends AppCompatActivity {
                         scoreTextview.setTextColor(Color.parseColor("#FFFFFF"));
                         scoreTextview.setText(String.valueOf(userScore));
 
+                        fullGuess.setVisibility(View.VISIBLE);
                         fullGuess.setText(guessList);
 
 

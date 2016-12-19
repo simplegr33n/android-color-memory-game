@@ -250,21 +250,6 @@ Color Buttons -->
             android:paddingBottom="10dp">
 
 
-            <!-- setting to invisible for aesthetics for now -->
-
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="invisible"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id" />
-
-
-
-
             <TextView
                 android:id="@+id/message"
                 android:layout_width="wrap_content"
@@ -273,44 +258,57 @@ Color Buttons -->
                 android:textSize="44dp"
                 android:textStyle="bold"
                 tools:text="Great Stuff!"
-                android:layout_below="@+id/score"
+                android:layout_above="@+id/score"
                 android:layout_centerHorizontal="true" />
 
-
-            <TextView
-                android:id="@+id/boardname"
-                android:layout_above="@id/score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#caa09d9d"
-                android:text="De Stijl"
-                android:textSize="44dp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:id="@+id/highscore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#d23de262"
+                android:textColor="#d249fe72"
                 android:textSize="24dp"
                 android:textStyle="bold"
                 tools:text="High Score: 1"
-                android:layout_above="@+id/boardname"
+                android:layout_below="@+id/score"
                 android:layout_centerHorizontal="true" />
+
+
+
+            <TextView
+                android:id="@+id/boardname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#d2dae9ff"
+                android:text="De Stijl"
+                android:textSize="44dp"
+                android:textStyle="bold"
+                android:layout_below="@+id/highscore"
+                android:layout_centerHorizontal="true" />
+
+
+            <!-- setting to invisible for aesthetics for now -->
 
             <TextView
                 android:id="@+id/score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textColor="#FFF"
                 android:textSize="164dp"
                 android:textStyle="bold"
                 tools:text="1"
-                android:layout_above="@+id/adView"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerInParent="true" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id"
+                android:layout_below="@+id/boardname"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="47dp" />
 
 
         </RelativeLayout>
