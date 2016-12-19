@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -82,7 +80,7 @@ public class ActivityLaunch extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mHighscoreDatabaseReference = mFirebaseDatabase.getReference().child("highscore");
         recordTextview = (TextView) findViewById(R.id.record);
-        
+
 
         ImageView settingsButton = (ImageView) findViewById(R.id.settings);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -460,22 +458,16 @@ public class ActivityLaunch extends AppCompatActivity {
                 }
 
                 levelName.setText("Classic");
-
-                // Set record
                 recordTextview.setText(String.valueOf(classic_record));
-
-
-
+                centerLocked.setVisibility(View.GONE);
+                centerImageview.setImageResource(R.drawable.board_classic);
+                leftImageview.setImageResource(R.drawable.board_pi);
+                rightImageview.setImageResource(R.drawable.board_destijl);
                 if (unlockedLevels >= 3) {
                     leftLocked.setVisibility(View.GONE);
                 } else {
                     leftLocked.setVisibility(View.VISIBLE);
                 }
-
-                centerLocked.setVisibility(View.GONE);
-                centerImageview.setImageResource(R.drawable.board_classic);
-                leftImageview.setImageResource(R.drawable.board_pi);
-                rightImageview.setImageResource(R.drawable.board_destijl);
 
                 leftImageview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -595,15 +587,6 @@ public class ActivityLaunch extends AppCompatActivity {
                 } else {
                     centerLocked.setVisibility(View.VISIBLE);
                 }
-
-
-                if (unlockedLevels >= 4) {
-                    rightLocked.setVisibility(View.GONE);
-                } else {
-                    // until we have a level four
-                    rightLocked.setVisibility(View.GONE);
-                }
-
 
                 break;
 
