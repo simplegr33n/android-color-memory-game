@@ -1,4 +1,4 @@
-# Android Color Memory Game
+# <img src="https://github.com/simplegr33n/android-color-memory-game/blob/master/screenshots/logos/newlogo.jpg" width="32"> Android Color Memory Game
 
 Check it out on the Google Play store here: 
 https://play.google.com/store/apps/details?id=ca.ggolda.color_memory_game
